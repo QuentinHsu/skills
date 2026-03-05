@@ -34,4 +34,7 @@ English version: [`skills.md`](skills.md)
 
 - `README.md` 保留安装、更新与技能文档入口链接。
 - 具体说明写在对应技能文档中（`SKILL.md` / `rules/*.md`）。
+- 对差异驱动的 git-writing 技能（`branch-name`、`pr-content`、`change-pack`），默认使用**当前分支对比基线分支**的 diff 口径（优先用户指定基线，否则依次回退 `main`、`master`）。
+- 仅在用户明确要求时，才并入未提交改动。
+- `commit-message` 维持 staged-first 设计（`git diff --cached`）。
 - 新增技能时，只需更新本索引并补齐对应技能目录文档。

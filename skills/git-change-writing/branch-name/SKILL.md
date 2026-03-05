@@ -1,6 +1,6 @@
 ---
 name: branch-name
-description: Generate Git branch names from staged or branch changes
+description: Generate Git branch names from current branch changes against a base branch
 metadata:
   author: QuentinHsu
   version: "2026.03.02"
@@ -24,7 +24,7 @@ Generate clean, team-friendly Git branch names based on current code changes.
 ## Quick reference
 
 - **Rule file:** [rules/branch-name.md](rules/branch-name.md)
-- **Input sources:** `git status`, `git diff --stat`, `git diff --cached` (prefer staged), optional commit context
+- **Input sources:** branch diff first (`git diff <base>...HEAD --stat`, optional `git log --oneline <base>..HEAD`), where `<base>` is user-specified or fallback `main`/`master`; include `git diff --cached` / `git diff` only when user explicitly asks to include uncommitted changes
 - **Reusable context:** prefer upstream `DIFF_CONTEXT` / `RAW_DIFF` when provided
 - **Default output language:** Chinese + English
 - **Language override:** if user explicitly asks for single language, output only that language

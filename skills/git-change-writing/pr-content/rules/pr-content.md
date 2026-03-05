@@ -20,12 +20,20 @@ Generate a complete PR Title and Description based on current branch changes.
 - Do not execute repeated full-diff reads once `DIFF_CONTEXT` is sufficient.
 - Only fallback to Git reads when context is missing, stale, or clearly incomplete.
 
-## Step 1: Gather change context
+## Step 1: Gather change context (branch-level diff first)
 
-- Read `git status` to understand working tree state.
-- Read `git diff --stat` to understand file-level scope.
-- Read `git log --oneline -5` to understand recent commit intent.
-- Read relevant diff details when needed for accurate summary.
+- Use **branch-level diff** as primary source: compare current branch against a base branch.
+- Resolve base branch with this priority:
+  1. user-specified base branch (if provided)
+  2. `main`
+  3. `master`
+- If none is available, ask user to provide a base branch.
+- If current branch equals resolved base branch and local commits are ahead of upstream, use upstream tracking point (`@{upstream}`) as effective baseline.
+- Read `git diff <effective_base>...HEAD --stat` to understand file-level scope.
+- Read `git log --oneline <effective_base>..HEAD` to summarize intent across all commits in effective range.
+- Read relevant diff details from `<effective_base>...HEAD` when needed for accurate summary.
+- If current branch equals base branch but upstream tracking is missing, ask user to provide explicit comparison ref (e.g. `origin/main`, tag, or SHA).
+- Only when user explicitly requests including uncommitted changes, additionally read `git diff --cached` / `git diff` and mark context as mixed.
 
 ## Step 2: Determine PR type
 
@@ -202,6 +210,6 @@ English
 
 ## Conventions
 
-- Mention `main` only as internal baseline for analysis, not in PR summary narrative.
-- Keep statements grounded in actual diffs and commits.
+- Mention base branch only as internal baseline for analysis, not in PR summary narrative.
+- Keep statements grounded in actual branch diffs and commits.
 - Prefer concrete change highlights over generic wording.

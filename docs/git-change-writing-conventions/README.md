@@ -26,7 +26,9 @@ Use this as a checklist when creating or updating any related skill/rule.
 
 Recommended fields:
 
-- `source`: `staged` | `unstaged` | `mixed`
+- `source`: `branch` | `mixed`
+- `base_branch`: comparison baseline branch (user-specified preferred; fallback `main` then `master`)
+- `range`: effective diff range, e.g. `<base>...HEAD` (optional but recommended for traceability)
 - `files`: changed files or grouped modules
 - `summary`: 1-3 lines
 - `intent`: `feat` | `fix` | `refactor` | `docs` | `chore` | `test` | `perf`
@@ -35,6 +37,16 @@ Recommended fields:
 - `breaking_change`: optional flag + description
 - `issues`: optional references when explicitly provided
 - `terms`: domain keywords for wording consistency
+
+### Branch diff baseline policy (hard rule)
+
+- Prefer **branch-level diff** as primary source: current branch vs base branch.
+- Resolve base branch in order: user-specified base → `main` → `master`.
+- Analyze branch history with `<base>..HEAD` and file scope with `<base>...HEAD`.
+- If current branch is the same as resolved base branch and has local commits ahead of upstream, use upstream tracking point as baseline (e.g. `@{upstream}..HEAD` / `@{upstream}...HEAD`).
+- In that case, local ahead commits are the effective diff content.
+- If upstream is missing/unconfigured, ask user to specify a comparison reference (e.g. `origin/main`, tag, or commit SHA).
+- Include uncommitted changes (`--cached` / working tree) only when user explicitly requests it; then mark `source: mixed`.
 
 ## 3) Output copyability rules
 
@@ -61,7 +73,7 @@ Recommended fields:
 ## 6) Token-efficiency checklist
 
 - Summarize once, reuse many times.
-- Prefer `diff --stat` + targeted details over large raw dumps.
+- Prefer `git diff <base>...HEAD --stat` + targeted details over large raw dumps.
 - Avoid duplicate explanation across branch/commit/PR outputs.
 
 ## 7) Maintenance checklist
