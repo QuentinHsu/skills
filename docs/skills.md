@@ -34,4 +34,7 @@ Shared conventions:
 
 - `README.md` keeps install/update guidance and skill doc entry links.
 - Skill details belong to each skill document (`SKILL.md` / `rules/*.md`).
+- For diff-driven git-writing skills (`branch-name`, `pr-content`, `change-pack`), default diff scope is **current branch vs base branch** (user-specified base preferred; fallback `main` then `master`).
+- Include uncommitted changes only when explicitly requested.
+- `commit-message` remains staged-first by design (`git diff --cached`).
 - When adding new skills, update this index and the related skill directory docs.

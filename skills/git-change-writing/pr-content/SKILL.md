@@ -26,7 +26,7 @@ Title and Description should be output as separate copy-ready blocks for two dif
 ## Quick reference
 
 - **Rule file:** [rules/pr-content.md](rules/pr-content.md)
-- **Input sources:** `git status`, `git diff --stat`, `git log --oneline -5`, plus relevant diff details
+- **Input sources:** branch diff first (`git diff <base>...HEAD --stat`, `git log --oneline <base>..HEAD`, plus relevant diff details), where `<base>` is user-specified or fallback `main`/`master`; optionally include `git diff --cached` / `git diff` only when user explicitly asks to include uncommitted changes
 - **Reusable context:** prefer upstream `DIFF_CONTEXT` / `RAW_DIFF` when provided
 - **Default output language:** Chinese + English
 - **Language override:** if user explicitly asks for single language, output only that language

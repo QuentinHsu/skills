@@ -26,7 +26,9 @@ Generate a full Git writing pack from one analysis pass to reduce repeated diff 
 
 Recommended fields:
 
-- `source`: `staged` | `unstaged` | `mixed`
+- `source`: `branch` | `mixed`
+- `base_branch`: comparison baseline branch (user-specified preferred; fallback `main` then `master`)
+- `range`: effective diff range, e.g. `<base>...HEAD` (optional but recommended)
 - `files`: changed file list or grouped modules
 - `summary`: concise high-level change statement (1-3 lines)
 - `intent`: one of `feat` / `fix` / `refactor` / `docs` / `chore` / `test` / `perf`
@@ -36,13 +38,21 @@ Recommended fields:
 - `issues`: optional issue references (only when provided)
 - `terms`: domain keywords from paths/symbols for naming consistency
 
-## Step 1: Build one shared DIFF_CONTEXT
+## Step 1: Build one shared DIFF_CONTEXT (branch-level diff first)
 
-- Read `git status` to detect staged/unstaged scope.
-- Read `git diff --stat` for high-level file summary.
-- Prefer `git diff --cached` when staged changes exist.
-- If staged diff is empty, use `git diff` fallback.
+- Use **branch-level diff** as primary source: compare current branch against a base branch.
+- Resolve base branch with this priority:
+  1. user-specified base (e.g. `--base release/2026Q1` or explicit request text)
+  2. `main`
+  3. `master`
+- If neither `main` nor `master` exists and no base is provided, ask user to specify base branch.
+- If current branch equals resolved base branch and local commits are ahead of upstream, use upstream tracking point as baseline (e.g. `@{upstream}`) and treat local ahead commits as effective diff content.
+- Compute branch diff from merge-base, e.g. `git diff <base>...HEAD` (equivalent to diffing from merge-base to `HEAD`).
+- For the same-branch-ahead case, compute against upstream baseline instead: `git diff @{upstream}...HEAD`.
+- Read file summary from the effective range (`git diff <effective_base>...HEAD --stat`).
+- Read intent from the effective commit range (`git log --oneline <effective_base>..HEAD`).
 - Build one compact `DIFF_CONTEXT` containing:
+  - `base_branch` and effective diff range (for traceability)
   - change scope (major modules/files)
   - primary intent (`feat`/`fix`/`refactor`/`docs`/`chore`/`test`/`perf`)
   - key behavior changes (what + why)
@@ -51,8 +61,9 @@ Recommended fields:
 
 ### Fallback behavior
 
-- If staged and unstaged both exist, prefer staged as primary source and mark `source: mixed` only when both are intentionally included.
-- If no meaningful diff exists, stop and ask user to stage or provide target files.
+- If branch diff is empty (`<base>...HEAD` has no changes), stop and ask user to confirm target base branch.
+- If current branch equals base branch but no upstream tracking exists, ask user to provide explicit comparison ref (e.g. `origin/main`, tag, or SHA).
+- If user explicitly asks to include uncommitted work, append working tree deltas (`git diff --cached` and/or `git diff`) as additive context and mark `source: mixed`.
 - If context conflicts with user-stated intent, prioritize factual diff and present one neutral alternative output.
 
 ## Step 2: Chain generation from DIFF_CONTEXT only
@@ -319,6 +330,7 @@ English
 Before returning final pack, verify all checks below:
 
 - [ ] All sections are generated from one shared `DIFF_CONTEXT` without repeated full-diff reads.
+- [ ] `DIFF_CONTEXT` is built from current-branch vs base-branch diff (user-specified base preferred; fallback `main` then `master`).
 - [ ] Branch prefix, commit type, and PR title type are semantically aligned with `intent`.
 - [ ] PR title format is exactly `<type>: <brief description>`.
 - [ ] PR description headings follow the fixed heading map for the chosen PR type.

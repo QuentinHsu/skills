@@ -20,12 +20,19 @@ Generate concise, meaningful branch names from current changes.
 - Do not execute repeated full-diff reads once `DIFF_CONTEXT` is sufficient.
 - Only fallback to Git reads when context is missing, stale, or clearly incomplete.
 
-## Step 1: Gather change context
+## Step 1: Gather change context (branch-level diff first)
 
-- Read `git status` to understand staged/unstaged scope.
-- Read `git diff --stat` for file-level summary.
-- Prefer `git diff --cached` when staged changes exist.
-- If no staged changes, use unstaged `git diff` plus file paths as fallback.
+- Use **branch-level diff** as primary source: compare current branch against a base branch.
+- Resolve base branch with this priority:
+  1. user-specified base branch (if provided)
+  2. `main`
+  3. `master`
+- If none is available, ask user to provide a base branch.
+- If current branch equals resolved base branch and local commits are ahead of upstream, use upstream tracking point (`@{upstream}`) as effective baseline.
+- Read `git diff <effective_base>...HEAD --stat` for file-level summary.
+- Optionally read `git log --oneline <effective_base>..HEAD` to improve intent inference across multiple commits.
+- If current branch equals base branch but upstream tracking is missing, ask user to provide explicit comparison ref (e.g. `origin/main`, tag, or SHA).
+- Only when user explicitly requests including uncommitted changes, additionally read `git diff --cached` / `git diff` and mark context as mixed.
 
 ## Step 2: Infer intent and type
 

@@ -27,7 +27,7 @@ PR Title and PR Description should be output as separate copy-ready blocks for t
 ## Quick reference
 
 - **Rule file:** [rules/change-pack.md](rules/change-pack.md)
-- **Input sources:** `git status`, `git diff --stat`, `git diff --cached` (prefer staged), fallback `git diff`
+- **Input sources:** branch diff first (`git diff <base>...HEAD --stat`, `git log --oneline <base>..HEAD`), where `<base>` is user-specified or fallback `main`/`master`; optionally include `git diff --cached` / `git diff` when user explicitly asks to include uncommitted changes
 - **Shared context:** `DIFF_CONTEXT` (single source of truth)
 - **Reusable input:** normalize `RAW_DIFF` to `DIFF_CONTEXT` once, then reuse
 - **Default output language:** Chinese + English
