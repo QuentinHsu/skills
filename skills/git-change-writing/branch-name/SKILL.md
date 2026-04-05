@@ -72,13 +72,9 @@ Output 3 candidates by default, ordered from best to acceptable.
 
 If intent is ambiguous, include one neutral fallback like `chore/<area>-cleanup`.
 
-## Language and Output Format (Step 5)
+## Output Format (Step 5)
 
-See [_shared/bilingual-output.md](../_shared/bilingual-output.md) for bilingual output rules.
-
-Default: output both 简体中文 and English versions.
-
-If user explicitly requests single language, output only that language.
+Branch names are always English tokens — output **English only** (no bilingual output needed).
 
 **Output structure:**
 - `Recommended:` one best branch name
@@ -86,17 +82,6 @@ If user explicitly requests single language, output only that language.
 - optional one-line rationale per candidate
 
 ## Example Output
-
-中文
-
-```text
-Recommended: fix/auth-token-refresh-race
-Alternatives:
-- fix/auth-refresh-lock
-- refactor/auth-token-renewal-flow
-```
-
-English
 
 ```text
 Recommended: fix/auth-token-refresh-race

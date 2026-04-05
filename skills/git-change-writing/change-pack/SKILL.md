@@ -135,24 +135,15 @@ Output in order:
 
 For each section, provide bilingual or single-language content based on request.
 
-In bilingual mode, each section contains exactly two copy-ready code blocks (one for `中文`, one for `English`).
+**Exception:** Branch Name is always English only (no bilingual output needed — branch names are English tokens).
+
+In bilingual mode, each section (except Branch Name) contains exactly two copy-ready code blocks (one for `中文`, one for `English`).
 
 Language label line (`中文` / `English`) appears immediately above its corresponding code block.
 
 ## Copy-Ready Template
 
 Branch Name
-
-中文
-
-```text
-Recommended: <prefix/slug>
-Alternatives:
-- <prefix/slug-2>
-- <prefix/slug-3>
-```
-
-English
 
 ```text
 Recommended: <prefix/slug>
