@@ -68,6 +68,8 @@ Keep header ≤ 72 chars (Git tools truncate longer headers).
 
 English subject starts with lowercase (Conventional Commits spec requirement).
 
+Chinese subject written in Simplified Chinese (`type(scope)` remains in English — they are Conventional Commits keywords).
+
 ### 2.3 PR Content
 
 Generate `Title` + `Description` in Markdown.
@@ -111,6 +113,8 @@ Default: Simplified Chinese + English (semantically aligned, not word-for-word t
 If user requests one language, output only requested language.
 
 When bilingual, Chinese and English must each be wrapped in independent code blocks in every section.
+
+Each language version must be written entirely in its respective language — not one version copied and relabeled.
 
 ## Token-Efficiency Constraints (Step 4)
 

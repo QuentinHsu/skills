@@ -15,6 +15,9 @@ Bilingual output format specification.
 - Each language uses independent code block
 - Add language label (`中文` or `English`) immediately above each code block
 - **Never** mix two languages in the same code block
+- Content under `中文` label **must** be written in Simplified Chinese
+- Content under `English` label **must** be written in English
+- The two versions must be independently composed in their respective languages — not one version copied and relabeled
 
 ### Semantic Alignment
 

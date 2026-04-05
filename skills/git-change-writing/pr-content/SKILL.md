@@ -75,6 +75,8 @@ See [_shared/bilingual-output.md](../_shared/bilingual-output.md) for bilingual 
 
 Default: output both 简体中文 and English versions (semantically aligned, not word-for-word translation).
 
+Each language version must be independently written in its respective language — not one version copied and relabeled.
+
 If user explicitly requests single language, output only that language.
 
 **Output structure:**

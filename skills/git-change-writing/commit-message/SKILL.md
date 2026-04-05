@@ -77,6 +77,9 @@ If user explicitly requests single language, output only that language.
 
 Each language gets independent code block with language label above it.
 
+Chinese version: subject and body written in Simplified Chinese (`type(scope)` remains in English — they are Conventional Commits keywords).
+English version: subject and body written in English.
+
 ## Examples
 
 ### Simple fix (Header only)
