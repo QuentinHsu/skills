@@ -1,5 +1,4 @@
----
-name: code-style
+name: frontend-code-style
 description: Apply frontend code style rules for TypeScript, TSX, DOM structure, and accessibility. Use this skill when creating, refactoring, reviewing, or standardizing frontend code, especially when the user asks for cleaner TS/TSX, better typing, stricter JSX structure, or accessible HTML and DOM markup. Trigger on requests like '写个前端 code style', '规范一下 TS/TSX 写法', 'avoid nested ternary', 'review this component style', 'add accessibility rules', or 'standardize DOM a11y attributes'.
 metadata:
   author: QuentinHsu

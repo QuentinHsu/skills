@@ -82,7 +82,7 @@ Shared conventions:
 
 ### Frontend
 
-- Frontend skills (`code-style`) target TypeScript, TSX, and DOM markup. Apply rules in order: TS first, then TSX, then DOM accessibility.
+- Frontend skills (`frontend-code-style`) target TypeScript, TSX, and DOM markup. Apply rules in order: TS first, then TSX, then DOM accessibility.
 - Style rules focus on readability and correctness, not formatting (whitespace, semicolons, quotes) — that is a formatter’s job.
 
 ### Refactor

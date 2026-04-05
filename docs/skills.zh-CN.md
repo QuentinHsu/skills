@@ -82,7 +82,7 @@ English version: [`skills.md`](skills.md)
 
 ### Frontend
 
-- 前端技能（`code-style`）针对 TypeScript、TSX 和 DOM 标记。规则按顺序应用：先 TS，再 TSX，最后 DOM 无障碍。
+- 前端技能（`frontend-code-style`）针对 TypeScript、TSX 和 DOM 标记。规则按顺序应用：先 TS，再 TSX，最后 DOM 无障碍。
 - 样式规则关注可读性和正确性，不做纯格式化（空格、分号、引号）——那是 formatter 的职责。
 
 ### Refactor
