@@ -30,6 +30,13 @@ English version: [`skills.md`](skills.md)
   - 规则：
     - [`skills/git-change-writing/branch-name/rules/branch-name.md`](../skills/git-change-writing/branch-name/rules/branch-name.md)
 
+- `frontend/code-style`
+  - 总览：[`skills/frontend/code-style/SKILL.md`](../skills/frontend/code-style/SKILL.md)
+  - 规则：
+    - [`skills/frontend/code-style/rules/ts-style.md`](../skills/frontend/code-style/rules/ts-style.md)
+    - [`skills/frontend/code-style/rules/tsx-style.md`](../skills/frontend/code-style/rules/tsx-style.md)
+    - [`skills/frontend/code-style/rules/dom-a11y-style.md`](../skills/frontend/code-style/rules/dom-a11y-style.md)
+
 ## 维护约定
 
 - `README.md` 保留安装、更新与技能文档入口链接。

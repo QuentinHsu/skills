@@ -30,6 +30,13 @@ Shared conventions:
   - Rules:
     - [`skills/git-change-writing/branch-name/rules/branch-name.md`](../skills/git-change-writing/branch-name/rules/branch-name.md)
 
+- `frontend/code-style`
+  - Overview: [`skills/frontend/code-style/SKILL.md`](../skills/frontend/code-style/SKILL.md)
+  - Rules:
+    - [`skills/frontend/code-style/rules/ts-style.md`](../skills/frontend/code-style/rules/ts-style.md)
+    - [`skills/frontend/code-style/rules/tsx-style.md`](../skills/frontend/code-style/rules/tsx-style.md)
+    - [`skills/frontend/code-style/rules/dom-a11y-style.md`](../skills/frontend/code-style/rules/dom-a11y-style.md)
+
 ## Maintenance Conventions
 
 - `README.md` keeps install/update guidance and skill doc entry links.
