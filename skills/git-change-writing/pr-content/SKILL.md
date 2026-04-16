@@ -26,11 +26,19 @@ Use **branch-level diff** as primary source (compare current branch against base
 
 ## Determine PR Type (Step 2)
 
+See [_shared/type-classification.md](../_shared/type-classification.md) for the detailed classification rules.
+
 Select one primary type based on change intent:
 - `feat`: new feature
 - `fix`: bug fix
 - `perf` / `refactor`: optimization or refactor
 - `docs` / `chore`: docs or maintenance
+
+Use the **dominant outcome for the user**:
+- `feat` when the PR introduces a new capability, workflow, option, or use case
+- `perf` when the PR keeps the same capability but improves speed, smoothness, readability, interaction quality, or UI polish
+- For UI-only or UX-only improvements that do not add new utility, prefer `perf`
+- If the main point is restoring broken behavior, choose `fix` even if the experience also improves
 
 The type drives the PR description structure (different types need different sections).
 

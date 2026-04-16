@@ -23,6 +23,7 @@ If `DIFF_CONTEXT` or `RAW_DIFF` is already provided, use it directly to save tim
 ## Build Shared DIFF_CONTEXT (Step 1)
 
 See [_shared/branch-diff-gathering.md](../_shared/branch-diff-gathering.md) for branch diff collection details.
+See [_shared/type-classification.md](../_shared/type-classification.md) for detailed intent classification rules.
 
 Use **branch-level diff** as primary source (compare current branch against base branch).
 
@@ -34,6 +35,12 @@ Build one compact `DIFF_CONTEXT` containing:
 - notable risks/compatibility impact
 - optional issue references if explicitly provided
 - domain keywords (`terms`) for naming consistency
+
+When setting `intent`, classify by **primary user-facing value**:
+- `feat` for net-new capability or workflow
+- `perf` for improving an existing capability's speed, smoothness, UI quality, or interaction quality
+- prefer `perf` over `feat` for pure UI/UX/interaction optimization without new utility
+- prefer `fix` when the main change restores broken behavior
 
 **Why build DIFF_CONTEXT:**
 - Single source of truth for all three outputs
@@ -101,6 +108,8 @@ Keep claims grounded in `DIFF_CONTEXT` facts.
 ### Output Consistency
 
 Branch prefix, commit type, and PR title type should be semantically aligned with `intent` whenever possible. This creates a coherent story across all three artifacts.
+
+If a change includes both polish and capability work, let the dominant outcome decide the shared `intent` once, then reuse it consistently across branch / commit / PR.
 
 Reuse terms from `DIFF_CONTEXT.terms` to avoid wording drift between outputs.
 

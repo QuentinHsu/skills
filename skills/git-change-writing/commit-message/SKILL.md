@@ -24,8 +24,18 @@ If staged diff is empty, tell user to stage files first (e.g., `git add <file>`)
 
 ## Classify Change Type (Step 2)
 
+See [_shared/type-classification.md](../_shared/type-classification.md) for the detailed classification rules.
+
 Infer the most suitable Conventional Commits type:
 - `feat`, `fix`, `refactor`, `docs`, `style`, `chore`, `perf`, `test`
+
+Choose type by **primary user-facing value**.
+
+Important boundary:
+- Use `feat` for **net-new capability or workflow**
+- Use `perf` when the same core capability remains but the experience becomes faster, smoother, clearer, or easier
+- For pure UI/UX/interaction optimization without a materially new use case, prefer `perf` over `feat`
+- If the interaction was actually broken and is now corrected, prefer `fix`
 
 Infer optional scope from changed module/path when clear.
 
