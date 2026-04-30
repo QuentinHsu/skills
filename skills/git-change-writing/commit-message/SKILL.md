@@ -20,7 +20,7 @@ If `DIFF_CONTEXT` or `RAW_DIFF` is already provided, use it directly to save tim
 
 Run `git diff --cached` to read staged changes.
 
-If staged diff is empty, tell user to stage files first (e.g., `git add <file>`), then stop.
+If staged diff is empty, simply remind the user to stage files first. Keep the message short and simple without suggesting specific commands to run, then stop.
 
 ## Classify Change Type (Step 2)
 
