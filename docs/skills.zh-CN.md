@@ -66,6 +66,9 @@ English version: [`skills.md`](skills.md)
     - [`skills/refactor/architecture/rules/dependency-direction.md`](../skills/refactor/architecture/rules/dependency-direction.md)
     - [`skills/refactor/architecture/rules/responsibility-separation.md`](../skills/refactor/architecture/rules/responsibility-separation.md)
 
+- `docs/readme-public-app`
+  - 总览：[`skills/docs/readme-public-app/SKILL.md`](../skills/docs/readme-public-app/SKILL.md)
+
 ## 维护约定
 
 ### 通用
@@ -89,3 +92,9 @@ English version: [`skills.md`](skills.md)
 
 - 重构技能（`clean`、`migrate`、`modernize`、`architecture`）按变更类型划分职责——单次操作不混用不同技能的关注点。每个技能都有明确的边界，定义了它改什么、不改什么。
 - 所有重构技能均要求行为保持。若目标代码缺少测试覆盖，需先提醒用户风险再继续。
+
+### Docs
+
+- 文档技能（`readme-public-app`）为公开发布的应用、库和 CLI 工具生成视觉化的 README — 包含居中 header、badges、功能展示和双语支持。
+- 默认输出双语（英文 + 中文）。仅在用户明确要求时输出单语言。
+- 更新已有 README 时，保留仍然准确的内容和用户的自定义章节。

@@ -66,6 +66,9 @@ Shared conventions:
     - [`skills/refactor/architecture/rules/dependency-direction.md`](../skills/refactor/architecture/rules/dependency-direction.md)
     - [`skills/refactor/architecture/rules/responsibility-separation.md`](../skills/refactor/architecture/rules/responsibility-separation.md)
 
+- `docs/readme-public-app`
+  - Overview: [`skills/docs/readme-public-app/SKILL.md`](../skills/docs/readme-public-app/SKILL.md)
+
 ## Maintenance Conventions
 
 ### General
@@ -89,3 +92,9 @@ Shared conventions:
 
 - Refactor skills (`clean`, `migrate`, `modernize`, `architecture`) are scoped by change type — do not mix concerns across skills in a single pass. Each skill has explicit boundaries defining what it changes and what it must not touch.
 - All refactor skills require behavior preservation. If the target code lacks test coverage, warn the user before proceeding.
+
+### Docs
+
+- Documentation skills (`readme-public-app`) generate visually polished README files for publicly distributed apps, libraries, and CLI tools — with centered headers, badges, feature showcases, and bilingual support.
+- Default output is bilingual (English + Chinese). Single-language output only when explicitly requested.
+- When updating an existing README, preserve accurate content and the user's custom sections.
