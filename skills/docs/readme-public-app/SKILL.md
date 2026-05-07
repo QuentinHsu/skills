@@ -16,10 +16,11 @@ The README is a product surface. Make it clear what the project does, who it is 
 
 1. **Gather context.** Read manifests such as `package.json`, `Cargo.toml`, `pyproject.toml`, `go.mod`, `Package.swift`, `Makefile`, `justfile`, CI config, Docker files, `.env.example`, license files, and existing README files.
 2. **Inspect behavior.** Scan entry points, exported APIs, CLI definitions, route files, UI app config, plugin manifests, `SKILL.md`, or workspace/package layout to understand what the project actually provides.
-3. **Classify the project.** Choose the dominant type from the project type table. Borrow sections from secondary types only when the repository clearly supports them.
-4. **Choose language output.** Follow the user's requested language first. Otherwise use the language strategy below.
-5. **Draft or update.** Preserve accurate existing content and user-specific sections. Rewrite stale, duplicated, or misleading content.
-6. **Verify.** Check referenced paths, commands, links, badges, env vars, and bilingual structure before finalizing.
+3. **Inspect user-facing language.** For apps with localization, read strings files such as `Localizable.strings`, `*.lproj`, `locales/`, `i18n/`, or UI label constants so README workflows use the actual button, menu, tab, and page names in each language.
+4. **Classify the project.** Choose the dominant type from the project type table. Borrow sections from secondary types only when the repository clearly supports them.
+5. **Choose language output.** Follow the user's requested language first. Otherwise use the language strategy below.
+6. **Draft or update.** Preserve accurate existing content and user-specific sections. Rewrite stale, duplicated, or misleading content.
+7. **Verify.** Check referenced paths, commands, links, badges, env vars, localized UI terms, and bilingual structure before finalizing.
 
 If information is missing, either omit that section or mark it as a short factual TODO only when the user explicitly wants placeholders. Do not invent features, install methods, screenshots, compatibility claims, benchmarks, download badges, or license names.
 
@@ -54,9 +55,12 @@ For bilingual output:
 - Put a language switcher at the top of each file:
   - `English | [简体中文](README.zh-CN.md)` in `README.md`
   - `[English](README.md) | 简体中文` in `README.zh-CN.md`
-- The two files must have matching sections in the same order.
+- The two files must have matching section structure in the same order, but section titles should be naturally localized unless they are product names, standards, or commonly untranslated labels.
 - Write the English and Chinese versions independently in their respective languages. Do not copy one version and relabel it.
-- Under `中文`, use Simplified Chinese. Keep code symbols, file names, commands, and UI labels in their original form.
+- Under `中文`, use Simplified Chinese. Keep code symbols, file names, commands, config keys, and literal identifiers in their original form.
+- Translate user-facing UI labels in the localized README to the app's actual localized wording when available. Examples: use `添加配置`, `设为当前`, `概览`, and `刷新` when those are the strings shown in the Simplified Chinese UI, instead of leaving English labels such as `Add Configuration`, `Set Current`, `Overview`, or `Refresh`.
+- Keep technical identifiers in their original form: file paths, commands, environment variables, config keys, package names, route paths, enum cases, and literal values. For terms that are both UI labels and technical concepts, prefer the actual localized UI string in workflow steps and the original code symbol in tables or config references.
+- Localize narrative terminology when it is not a code symbol. For example, in Simplified Chinese prefer `配置` or `供应商` over unexplained `profile` or `provider` unless the product UI intentionally uses the English term.
 
 ## Structure Rules
 
@@ -92,6 +96,8 @@ Badge rules:
 
 - Use only badges backed by real project data.
 - Prefer license, package version, supported platform/runtime, CI status, or release version.
+- When the user provides a repository URL, derive GitHub badges and Star History links from that owner/repo. If no public repository can be verified or inferred, omit repository-dependent badges and charts.
+- Do not add release/download badges unless the repository location is known. It is acceptable for those badges to show no releases or downloads for a new public repository, but the owner/repo must be correct.
 - Avoid vanity badges unless the existing README already uses them or the user requests them.
 
 ### Sections By Type
@@ -110,6 +116,7 @@ Use this as the default order. Skip optional sections when unsupported by the re
 
 ### Section Content
 
+- **Style references:** when the user points to another README as a style reference, emulate its structure, density, and visual treatment only where appropriate. Do not copy unsupported claims, features, update mechanisms, badges, install channels, screenshots, or project-specific workflows from the reference.
 - **Installation / Setup:** derive commands from manifests, lockfiles, Docker files, or existing docs.
 - **Quick Start:** give the shortest path from clean checkout or installation to a working result, usually 3-6 numbered steps.
 - **Usage:** show real commands, imports, API calls, UI flows, or workflows from the codebase.
@@ -131,6 +138,8 @@ Use this as the default order. Skip optional sections when unsupported by the re
 - Use tables for structured reference data with 2-5 columns.
 - Use numbered lists for ordered workflows and bullets for unordered facts.
 - Keep terminology aligned with actual code, UI labels, package names, and repository paths.
+- In localized READMEs, translate headings, workflow verbs, button/menu names, and ordinary product terminology into the target language when the project has matching localized strings. Do not leave English UI text in a localized workflow unless that exact English text appears in the target-language UI.
+- Preserve English only for code-native content and established product names: `make run`, `~/.codex/config.toml`, `OPENAI_API_KEY`, `model_providers.agents-hub`, `SwiftPM`, `Claude Code`, `Codex`, and similar literal identifiers.
 - Do not use emojis in headings or body text unless the existing project style clearly requires them.
 - Avoid hype such as "revolutionary", "blazing fast", "seamless", "powerful", or "beautiful" unless the repository proves the claim with a specific fact.
 - Do not include public-facing badges, star history, contributing guidance, or marketing language for `internal-tool` projects unless the user explicitly asks.
@@ -155,6 +164,7 @@ Before finalizing, verify:
 - Badge URLs point to real owners, repos, packages, or workflows.
 - Relative links resolve from the README location.
 - Bilingual READMEs have the same section structure and valid language switcher links.
+- Localized READMEs use localized section headings and actual localized UI labels where the project provides them, while code identifiers remain unchanged.
 - Internal docs do not leak private URLs, tokens, internal hostnames, or VPN-only links into a public README.
 
 If you cannot run a command or verify a claim, state that limitation briefly in the final response instead of presenting the claim as verified.
