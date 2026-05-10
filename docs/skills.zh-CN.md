@@ -37,6 +37,73 @@ English version: [`skills.md`](skills.md)
     - [`skills/frontend/code-style/rules/tsx-style.md`](../skills/frontend/code-style/rules/tsx-style.md)
     - [`skills/frontend/code-style/rules/dom-a11y-style.md`](../skills/frontend/code-style/rules/dom-a11y-style.md)
 
+- `design/foundation/impeccable`
+  - 总览：[`skills/design/foundation/impeccable/SKILL.md`](../skills/design/foundation/impeccable/SKILL.md)
+  - 参考：
+    - [`skills/design/foundation/impeccable/reference/craft.md`](../skills/design/foundation/impeccable/reference/craft.md)
+    - [`skills/design/foundation/impeccable/reference/extract.md`](../skills/design/foundation/impeccable/reference/extract.md)
+    - [`skills/design/foundation/impeccable/reference/typography.md`](../skills/design/foundation/impeccable/reference/typography.md)
+    - [`skills/design/foundation/impeccable/reference/color-and-contrast.md`](../skills/design/foundation/impeccable/reference/color-and-contrast.md)
+    - [`skills/design/foundation/impeccable/reference/spatial-design.md`](../skills/design/foundation/impeccable/reference/spatial-design.md)
+    - [`skills/design/foundation/impeccable/reference/motion-design.md`](../skills/design/foundation/impeccable/reference/motion-design.md)
+    - [`skills/design/foundation/impeccable/reference/interaction-design.md`](../skills/design/foundation/impeccable/reference/interaction-design.md)
+    - [`skills/design/foundation/impeccable/reference/responsive-design.md`](../skills/design/foundation/impeccable/reference/responsive-design.md)
+    - [`skills/design/foundation/impeccable/reference/ux-writing.md`](../skills/design/foundation/impeccable/reference/ux-writing.md)
+  - 脚本：
+    - [`skills/design/foundation/impeccable/scripts/cleanup-deprecated.mjs`](../skills/design/foundation/impeccable/scripts/cleanup-deprecated.mjs)
+
+- `design/planning/shape`
+  - 总览：[`skills/design/planning/shape/SKILL.md`](../skills/design/planning/shape/SKILL.md)
+
+- `design/evaluation/audit`
+  - 总览：[`skills/design/evaluation/audit/SKILL.md`](../skills/design/evaluation/audit/SKILL.md)
+
+- `design/evaluation/critique`
+  - 总览：[`skills/design/evaluation/critique/SKILL.md`](../skills/design/evaluation/critique/SKILL.md)
+  - 参考：
+    - [`skills/design/evaluation/critique/reference/cognitive-load.md`](../skills/design/evaluation/critique/reference/cognitive-load.md)
+    - [`skills/design/evaluation/critique/reference/heuristics-scoring.md`](../skills/design/evaluation/critique/reference/heuristics-scoring.md)
+    - [`skills/design/evaluation/critique/reference/personas.md`](../skills/design/evaluation/critique/reference/personas.md)
+
+- `design/composition/layout`
+  - 总览：[`skills/design/composition/layout/SKILL.md`](../skills/design/composition/layout/SKILL.md)
+
+- `design/composition/typeset`
+  - 总览：[`skills/design/composition/typeset/SKILL.md`](../skills/design/composition/typeset/SKILL.md)
+
+- `design/composition/colorize`
+  - 总览：[`skills/design/composition/colorize/SKILL.md`](../skills/design/composition/colorize/SKILL.md)
+
+- `design/composition/bolder`
+  - 总览：[`skills/design/composition/bolder/SKILL.md`](../skills/design/composition/bolder/SKILL.md)
+
+- `design/composition/quieter`
+  - 总览：[`skills/design/composition/quieter/SKILL.md`](../skills/design/composition/quieter/SKILL.md)
+
+- `design/content/clarify`
+  - 总览：[`skills/design/content/clarify/SKILL.md`](../skills/design/content/clarify/SKILL.md)
+
+- `design/content/distill`
+  - 总览：[`skills/design/content/distill/SKILL.md`](../skills/design/content/distill/SKILL.md)
+
+- `design/adaptation/adapt`
+  - 总览：[`skills/design/adaptation/adapt/SKILL.md`](../skills/design/adaptation/adapt/SKILL.md)
+
+- `design/motion/animate`
+  - 总览：[`skills/design/motion/animate/SKILL.md`](../skills/design/motion/animate/SKILL.md)
+
+- `design/motion/delight`
+  - 总览：[`skills/design/motion/delight/SKILL.md`](../skills/design/motion/delight/SKILL.md)
+
+- `design/motion/overdrive`
+  - 总览：[`skills/design/motion/overdrive/SKILL.md`](../skills/design/motion/overdrive/SKILL.md)
+
+- `design/quality/optimize`
+  - 总览：[`skills/design/quality/optimize/SKILL.md`](../skills/design/quality/optimize/SKILL.md)
+
+- `design/quality/polish`
+  - 总览：[`skills/design/quality/polish/SKILL.md`](../skills/design/quality/polish/SKILL.md)
+
 - `privacy/data-sanitization`
   - 总览：[`skills/privacy/data-sanitization/SKILL.md`](../skills/privacy/data-sanitization/SKILL.md)
 
@@ -90,6 +157,12 @@ English version: [`skills.md`](skills.md)
 
 - 前端技能（`frontend-code-style`）针对 TypeScript、TSX 和 DOM 标记。规则按顺序应用：先 TS，再 TSX，最后 DOM 无障碍。
 - 样式规则关注可读性和正确性，不做纯格式化（空格、分号、引号）——那是 formatter 的职责。
+
+### Design
+
+- 设计技能统一放在 `design` 下，因为它们覆盖产品、UX、视觉、内容、动效、质量、适配与性能，不只属于前端实现。
+- `foundation/impeccable` 提供共享的上下文协议与详细参考资料。
+- 设计子目录按大类组织：`planning`、`evaluation`、`composition`、`content`、`adaptation`、`motion`、`quality`。
 
 ### 隐私
 

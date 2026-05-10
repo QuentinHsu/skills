@@ -37,6 +37,73 @@ Shared conventions:
     - [`skills/frontend/code-style/rules/tsx-style.md`](../skills/frontend/code-style/rules/tsx-style.md)
     - [`skills/frontend/code-style/rules/dom-a11y-style.md`](../skills/frontend/code-style/rules/dom-a11y-style.md)
 
+- `design/foundation/impeccable`
+  - Overview: [`skills/design/foundation/impeccable/SKILL.md`](../skills/design/foundation/impeccable/SKILL.md)
+  - References:
+    - [`skills/design/foundation/impeccable/reference/craft.md`](../skills/design/foundation/impeccable/reference/craft.md)
+    - [`skills/design/foundation/impeccable/reference/extract.md`](../skills/design/foundation/impeccable/reference/extract.md)
+    - [`skills/design/foundation/impeccable/reference/typography.md`](../skills/design/foundation/impeccable/reference/typography.md)
+    - [`skills/design/foundation/impeccable/reference/color-and-contrast.md`](../skills/design/foundation/impeccable/reference/color-and-contrast.md)
+    - [`skills/design/foundation/impeccable/reference/spatial-design.md`](../skills/design/foundation/impeccable/reference/spatial-design.md)
+    - [`skills/design/foundation/impeccable/reference/motion-design.md`](../skills/design/foundation/impeccable/reference/motion-design.md)
+    - [`skills/design/foundation/impeccable/reference/interaction-design.md`](../skills/design/foundation/impeccable/reference/interaction-design.md)
+    - [`skills/design/foundation/impeccable/reference/responsive-design.md`](../skills/design/foundation/impeccable/reference/responsive-design.md)
+    - [`skills/design/foundation/impeccable/reference/ux-writing.md`](../skills/design/foundation/impeccable/reference/ux-writing.md)
+  - Scripts:
+    - [`skills/design/foundation/impeccable/scripts/cleanup-deprecated.mjs`](../skills/design/foundation/impeccable/scripts/cleanup-deprecated.mjs)
+
+- `design/planning/shape`
+  - Overview: [`skills/design/planning/shape/SKILL.md`](../skills/design/planning/shape/SKILL.md)
+
+- `design/evaluation/audit`
+  - Overview: [`skills/design/evaluation/audit/SKILL.md`](../skills/design/evaluation/audit/SKILL.md)
+
+- `design/evaluation/critique`
+  - Overview: [`skills/design/evaluation/critique/SKILL.md`](../skills/design/evaluation/critique/SKILL.md)
+  - References:
+    - [`skills/design/evaluation/critique/reference/cognitive-load.md`](../skills/design/evaluation/critique/reference/cognitive-load.md)
+    - [`skills/design/evaluation/critique/reference/heuristics-scoring.md`](../skills/design/evaluation/critique/reference/heuristics-scoring.md)
+    - [`skills/design/evaluation/critique/reference/personas.md`](../skills/design/evaluation/critique/reference/personas.md)
+
+- `design/composition/layout`
+  - Overview: [`skills/design/composition/layout/SKILL.md`](../skills/design/composition/layout/SKILL.md)
+
+- `design/composition/typeset`
+  - Overview: [`skills/design/composition/typeset/SKILL.md`](../skills/design/composition/typeset/SKILL.md)
+
+- `design/composition/colorize`
+  - Overview: [`skills/design/composition/colorize/SKILL.md`](../skills/design/composition/colorize/SKILL.md)
+
+- `design/composition/bolder`
+  - Overview: [`skills/design/composition/bolder/SKILL.md`](../skills/design/composition/bolder/SKILL.md)
+
+- `design/composition/quieter`
+  - Overview: [`skills/design/composition/quieter/SKILL.md`](../skills/design/composition/quieter/SKILL.md)
+
+- `design/content/clarify`
+  - Overview: [`skills/design/content/clarify/SKILL.md`](../skills/design/content/clarify/SKILL.md)
+
+- `design/content/distill`
+  - Overview: [`skills/design/content/distill/SKILL.md`](../skills/design/content/distill/SKILL.md)
+
+- `design/adaptation/adapt`
+  - Overview: [`skills/design/adaptation/adapt/SKILL.md`](../skills/design/adaptation/adapt/SKILL.md)
+
+- `design/motion/animate`
+  - Overview: [`skills/design/motion/animate/SKILL.md`](../skills/design/motion/animate/SKILL.md)
+
+- `design/motion/delight`
+  - Overview: [`skills/design/motion/delight/SKILL.md`](../skills/design/motion/delight/SKILL.md)
+
+- `design/motion/overdrive`
+  - Overview: [`skills/design/motion/overdrive/SKILL.md`](../skills/design/motion/overdrive/SKILL.md)
+
+- `design/quality/optimize`
+  - Overview: [`skills/design/quality/optimize/SKILL.md`](../skills/design/quality/optimize/SKILL.md)
+
+- `design/quality/polish`
+  - Overview: [`skills/design/quality/polish/SKILL.md`](../skills/design/quality/polish/SKILL.md)
+
 - `privacy/data-sanitization`
   - Overview: [`skills/privacy/data-sanitization/SKILL.md`](../skills/privacy/data-sanitization/SKILL.md)
 
@@ -90,6 +157,12 @@ Shared conventions:
 
 - Frontend skills (`frontend-code-style`) target TypeScript, TSX, and DOM markup. Apply rules in order: TS first, then TSX, then DOM accessibility.
 - Style rules focus on readability and correctness, not formatting (whitespace, semicolons, quotes) — that is a formatter’s job.
+
+### Design
+
+- Design skills live under `design` because they cover product, UX, visual, content, motion, quality, adaptation, and performance concerns, not only frontend implementation.
+- `foundation/impeccable` provides the shared context protocol and detailed references.
+- Design subfolders group broad capabilities: `planning`, `evaluation`, `composition`, `content`, `adaptation`, `motion`, and `quality`.
 
 ### Privacy
 
