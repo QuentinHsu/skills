@@ -37,6 +37,9 @@ English version: [`skills.md`](skills.md)
     - [`skills/frontend/code-style/rules/tsx-style.md`](../skills/frontend/code-style/rules/tsx-style.md)
     - [`skills/frontend/code-style/rules/dom-a11y-style.md`](../skills/frontend/code-style/rules/dom-a11y-style.md)
 
+- `privacy/data-sanitization`
+  - 总览：[`skills/privacy/data-sanitization/SKILL.md`](../skills/privacy/data-sanitization/SKILL.md)
+
 - `refactor/clean`
   - 总览：[`skills/refactor/clean/SKILL.md`](../skills/refactor/clean/SKILL.md)
   - 规则：
@@ -87,6 +90,10 @@ English version: [`skills.md`](skills.md)
 
 - 前端技能（`frontend-code-style`）针对 TypeScript、TSX 和 DOM 标记。规则按顺序应用：先 TS，再 TSX，最后 DOM 无障碍。
 - 样式规则关注可读性和正确性，不做纯格式化（空格、分号、引号）——那是 formatter 的职责。
+
+### 隐私
+
+- 隐私技能（`data-sanitization`）默认将本地真实数据视为敏感数据。任何可能被上传、共享、粘贴到外部服务或放入远程提示词的数据，都必须先脱敏。
 
 ### Refactor
 

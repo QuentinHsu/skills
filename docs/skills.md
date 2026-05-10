@@ -37,6 +37,9 @@ Shared conventions:
     - [`skills/frontend/code-style/rules/tsx-style.md`](../skills/frontend/code-style/rules/tsx-style.md)
     - [`skills/frontend/code-style/rules/dom-a11y-style.md`](../skills/frontend/code-style/rules/dom-a11y-style.md)
 
+- `privacy/data-sanitization`
+  - Overview: [`skills/privacy/data-sanitization/SKILL.md`](../skills/privacy/data-sanitization/SKILL.md)
+
 - `refactor/clean`
   - Overview: [`skills/refactor/clean/SKILL.md`](../skills/refactor/clean/SKILL.md)
   - Rules:
@@ -87,6 +90,10 @@ Shared conventions:
 
 - Frontend skills (`frontend-code-style`) target TypeScript, TSX, and DOM markup. Apply rules in order: TS first, then TSX, then DOM accessibility.
 - Style rules focus on readability and correctness, not formatting (whitespace, semicolons, quotes) — that is a formatter’s job.
+
+### Privacy
+
+- Privacy skills (`data-sanitization`) treat local real data as sensitive by default. Any data that may be uploaded, shared, pasted into external services, or included in remote prompts must be sanitized first.
 
 ### Refactor
 
