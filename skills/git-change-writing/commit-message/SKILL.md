@@ -1,14 +1,16 @@
 ---
 name: commit-message
-description: Generate conventional commit messages from staged git diff. Use this skill whenever the user asks to generate a commit message, write commit text, create a conventional commit, or says things like '生成 commit', '写 commit message', '根据暂存区生成提交说明', 'generate commit message from staged diff', 'write a conventional commit', 'what should my commit say', 'help me commit this'. Also trigger when you see requests to follow Conventional Commits format or when the user has staged changes and asks about committing.
+description: Generate conventional commit messages from staged git diff. Use this skill whenever the user asks to generate a commit message, write commit text, create a conventional commit, or says things like '生成 commit', '写 commit message', '根据暂存区生成提交说明', 'generate commit message from staged diff', 'write a conventional commit', 'what should my commit say', 'help me commit this', '/commit-message en auto', '/commit-message zh auto', '直接用生成的 commit message 提交暂存区', or 'generate and auto commit staged changes'. Also trigger when you see requests to follow Conventional Commits format or when the user has staged changes and asks about committing.
 metadata:
   author: QuentinHsu
-  version: "2026.03.07"
+  version: "2026.05.21"
 ---
 
 # Commit Message
 
 Generate a high-quality commit message from staged changes following Conventional Commits format.
+
+When the user explicitly requests execution mode (for example `/commit-message en auto`), generate the final commit message in the requested language and use it to commit the staged changes automatically.
 
 ## Context Reuse (Step 0)
 
@@ -77,7 +79,7 @@ Use for metadata:
 
 Footer content should be factual and directly supported by staged diff/context.
 
-## Language and Output Format (Step 4)
+## Language, Command Variants, and Output Format (Step 4)
 
 See [_shared/bilingual-output.md](../_shared/bilingual-output.md) for bilingual output rules.
 
@@ -85,10 +87,74 @@ Default: output both 简体中文 and English versions.
 
 If user explicitly requests single language, output only that language.
 
+Recognize explicit language selection from natural language requests or slash-command style inputs such as:
+- `/commit-message en`
+- `/commit-message english`
+- `/commit-message zh`
+- `/commit-message zh-cn`
+- `/commit-message cn`
+
+Language token mapping:
+- `en`, `english` → English only
+- `zh`, `zh-cn`, `cn`, `中文`, `简体中文` → Simplified Chinese only
+
+If no language is explicitly requested:
+- preview mode: output both 简体中文 and English versions
+- `auto` mode: resolve one final commit language before execution; prefer English by default unless the user clearly asks for Chinese
+
 Each language gets independent code block with language label above it.
 
 Chinese version: subject and body written in Simplified Chinese (`type(scope)` remains in English — they are Conventional Commits keywords).
 English version: subject and body written in English.
+
+Slash-command execution hint:
+- `/commit-message en auto` → generate English commit message and auto-commit staged changes
+- `/commit-message zh auto` → generate Simplified Chinese commit message and auto-commit staged changes
+
+If `auto` is not present, stay in preview mode and only output copy-ready commit message text.
+
+## Auto Commit Execution (Step 5)
+
+If the request explicitly includes `auto` (for example `/commit-message en auto`) or clearly asks you to commit immediately, switch from preview mode to execution mode.
+
+Execution rules:
+
+1. Read staged diff and draft the final commit message in exactly one target language.
+2. Use that exact message content to commit the staged changes automatically.
+3. Preserve header/body/footer formatting exactly, including blank lines and trailers.
+4. Prefer a full-message commit input path that safely supports multiline content (for example a commit message file or another equivalent full-text mechanism), instead of collapsing everything into a single-line header.
+5. Do not ask an extra "should I commit now" question when the user has already chosen `auto`.
+6. Keep the final auto-commit message clean and content-derived: do not append attribution or co-author trailers that were not explicitly requested and factually justified.
+7. In particular, never auto-commit messages containing AI/provider attribution lines such as `Co-Authored-By: Claude Opus 4.7 <noreply@anthropic.com>` or similar generated identity markers.
+
+If staged diff is empty, stop with the same short reminder defined in Step 1.
+
+For `auto` mode footer safety:
+- allow only clean, diff-supported commit content in the final message
+- do not inject `Co-authored-by` / `Co-Authored-By` trailers unless the user explicitly asked for a legitimate human co-author and the trailer is factually justified
+- never add assistant, model, vendor, or tool attribution to the committed message
+
+### Signed Commit and GPG Confirmation
+
+When execution mode is enabled, support signed commits as part of the normal workflow:
+
+- If the user explicitly requests signing, or the Git/repository configuration already requires signing (for example `commit.gpgsign=true`), perform a signed commit.
+- Allow Git, GPG, pinentry, or the operating system to surface the normal signing confirmation flow, including fingerprint confirmation dialogs when available.
+- Do not suppress, bypass, or fake the user's signing approval step.
+- If the signing flow requests a secret (passphrase, PIN, hardware-token approval, etc.), the user must complete that step directly in the terminal or OS dialog; do not collect secrets through chat.
+- If signing is requested/configured but the commit fails because signing is unavailable or rejected, report the failure briefly and do not claim success.
+
+### Execution Output
+
+In `auto` mode, do not return bilingual preview blocks as the primary result.
+
+Instead, return a concise execution summary containing:
+- whether the commit succeeded
+- the resolved commit language
+- the created commit hash and committed header when available
+- whether signing/GPG confirmation was invoked when relevant
+
+If commit execution fails, return a short failure summary plus the key reason.
 
 ## Examples
 
@@ -156,6 +222,38 @@ BREAKING CHANGE: profile update endpoint changes from PUT /profile to PATCH /use
 Closes #123
 ```
 
+## Auto Mode Examples
+
+### Auto commit in English
+
+Request:
+
+```text
+/commit-message en auto
+```
+
+Expected behavior:
+- read staged diff
+- generate one English Conventional Commit message
+- commit staged changes with that exact message
+- allow GPG / fingerprint authorization confirmation to appear if signing is requested or configured
+- return a short success summary instead of bilingual preview blocks
+
+### Auto commit in Simplified Chinese
+
+Request:
+
+```text
+/commit-message zh auto
+```
+
+Expected behavior:
+- read staged diff
+- generate one Simplified Chinese Conventional Commit message
+- commit staged changes with that exact message
+- preserve multiline body/footer formatting
+- return a short success or failure summary
+
 ## Modern Conventions (Recommended)
 
 - For breaking changes, use bang marker in header (`type(scope)!:`) plus `BREAKING CHANGE:` in footer
@@ -168,3 +266,6 @@ Closes #123
 - Do not fabricate changes not present in staged diff
 - Keep terminology consistent with actual code symbols and file paths
 - Keep body concise but informative for future review
+- In `auto` mode, execute exactly one commit against the staged changes only
+- In `auto` mode, commit only the clean generated git message; do not append AI or tool attribution trailers
+- Never claim a commit succeeded unless Git actually reports success
