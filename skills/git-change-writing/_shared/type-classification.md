@@ -27,7 +27,9 @@ Apply these checks in order:
    - Yes → `perf`
 4. **Does it mostly reorganize code without changing user-facing behavior?**
    - Yes → `refactor`
-5. Otherwise choose the best fit among `docs`, `test`, `chore`, `style`
+5. **Is it primarily adding or improving tests without changing production code?**
+   - Yes → `test`
+6. Otherwise choose the best fit among `docs`, `chore`, `style`
 
 ## Fast Triage Questions
 
@@ -41,6 +43,8 @@ When the diff is ambiguous, answer these questions in order:
    - If yes and the main value is restoring correctness, likely `fix`
 4. **Would most users fail to notice any product-level change?**
    - If yes, likely `refactor`
+5. **Is this purely test code with zero production changes?**
+   - If yes, likely `test`
 
 Short version:
 
@@ -48,6 +52,7 @@ Short version:
 - **same ability, better experience** → `perf`
 - **broken before, correct now** → `fix`
 - **mostly internal cleanup** → `refactor`
+- **adding tests** → `test`
 
 ## Quick Decision Tree
 
@@ -64,17 +69,20 @@ Use this mini flow when you need a fast, stable classification:
    - No → continue
 4. **Is the main value internal cleanup or restructuring?**
    - Yes → `refactor`
-   - No → choose the best fit among `docs`, `test`, `chore`, `style`
+   - No → continue
+5. **Is the main value test coverage or test quality?**
+   - Yes → `test`
+   - No → choose the best fit among `docs`, `chore`, `style`
 
 Compact version:
 
 ```text
 broken before?        yes -> fix
-no new capability?
-  but better UX/speed yes -> perf
 new capability?       yes -> feat
+same but better?      yes -> perf
 mostly internal?      yes -> refactor
-otherwise             -> docs/test/chore/style
+adding tests?         yes -> test
+otherwise             -> docs/chore/style
 ```
 
 ## Detailed Type Boundaries
@@ -174,6 +182,98 @@ Common wording that often implies `refactor`:
 - clean up implementation
 
 If the structural cleanup also makes the app noticeably faster or smoother and that is the main value, prefer `perf`.
+
+### `test` — Adding or improving tests
+
+Use `test` when the primary change is adding new tests or improving existing test coverage, without materially changing production behavior.
+
+Strong `test` signals:
+- adding unit tests, integration tests, or e2e tests for existing code
+- improving test coverage for previously untested paths
+- adding test fixtures, helpers, or mocks
+- refactoring test-only code for clarity
+
+If the same change also modifies production code, classify by the production change instead. Use `test` only when tests are the sole or primary change.
+
+**Scope rule for `test`:** The scope must reflect the **module or feature under test**, not the test directory name or test level.
+
+Infer scope from the test target, not the literal test file path:
+- `tests/auth/test_token.py` → scope `auth` (the module being tested)
+- `__tests__/components/SearchBox.test.tsx` → scope `search-box` (the component under test)
+- `src/utils/__tests__/format.test.ts` → scope `format` or `utils`
+- Tests spanning multiple unrelated modules → omit scope
+
+Rationale: scope signals **impact area** to readers. `test(tests)` tells nothing about what was tested; `test(auth)` immediately communicates that auth behavior is now covered.
+
+- ✅ `test(auth): cover token refresh edge cases`
+- ✅ `test(search): add pagination boundary tests`
+- ❌ `test(tests): add unit tests for token refresh` — `tests` is a directory label, not a meaningful impact area
+- ❌ `test(unit): add token refresh tests` — test level (unit/e2e) does not describe impact area
+
+`test` test:
+> Is the primary value improved test coverage or test quality, with no meaningful production behavior change?
+If yes, prefer `test`.
+
+### `docs` — Documentation only
+
+Use `docs` when the change is purely documentation, without code behavior changes.
+
+Strong `docs` signals:
+- README updates, API docs, inline code comments, or wiki pages
+- adding or revising usage guides, setup instructions, or contribution guides
+- docstring/JSDoc additions or corrections
+- changelog entries, license files, or governance docs
+- fixing broken links, typos, or formatting in documentation
+
+If code comments change alongside code changes, classify by the code change.
+
+**Scope guidance:** Use the documented area as scope. Use a generic label like `readme` or `contributing` only when the change is structural (reorganizing sections, updating badges) rather than documenting a specific feature.
+
+- ✅ `docs(api): document pagination query parameters`
+- ✅ `docs(setup): add Docker Compose instructions`
+- ⚠️ `docs(readme): update project description` — acceptable for structural README changes
+- ❌ `docs: update docs` — too vague
+
+`docs` test:
+> Is the sole purpose to add, update, or correct documentation without any code change?
+If yes, prefer `docs`.
+
+### `chore` — Tooling, dependencies, maintenance
+
+Use `chore` for changes that don't affect production code behavior.
+
+Strong `chore` signals:
+- dependency version bumps (npm, pip, cargo, gems, etc.)
+- CI/CD pipeline changes (.github/workflows, Jenkins, GitLab CI, etc.)
+- build tooling configuration (webpack, vite, esbuild, tsconfig, etc.)
+- dev tooling setup (.editorconfig, lint-staged, husky, pre-commit hooks, etc.)
+- .gitignore updates, dev script changes, repo-level configuration
+
+**Scope guidance:**
+- Dependency bumps → `deps` or the package name: `chore(deps): bump lodash to 4.17.21`
+- CI/CD → `ci`: `chore(ci): add bundle size check to PR workflow`
+- Build tooling → `build` or the tool name: `chore(build): migrate webpack to vite`
+- No clear sub-area → omit scope
+
+`chore` test:
+> Does this change affect developer workflow, tooling, or dependencies without altering production behavior?
+If yes, prefer `chore`.
+
+### `style` — Formatting only
+
+Use `style` for changes that only affect code formatting (whitespace, semicolons, line breaks, indentation), with zero logic change.
+
+Strong `style` signals:
+- applying formatter rules (Prettier, Black, gofmt, rustfmt, etc.)
+- fixing lint warnings that are purely stylistic
+- normalizing whitespace or line endings
+- reordering imports without semantic change
+
+If formatting changes are mixed with logic changes, classify by the logic change. Use `style` only when formatting is the sole change.
+
+`style` test:
+> Does the diff consist entirely of formatting changes with zero behavioral difference?
+If yes, prefer `style`.
 
 ## UI / UX Specific Guidance
 
@@ -443,6 +543,10 @@ Use these examples as a biasing reference in borderline cases.
 | Make existing bulk select panel faster and clearer | `perf` | same workflow, better experience |
 | Fix bulk select count being wrong | `fix` | correctness issue |
 | Split bulk action code paths into separate services | `refactor` | internal change |
+| Add unit tests for auth token refresh | `test` | test coverage for existing code |
+| Add e2e tests for checkout flow | `test` | test coverage, no production change |
+| Fix auth bug and add a regression test | `fix` | primary value is the bug fix, not the test addition |
+| Add integration tests for API pagination | `test` | test coverage for existing feature |
 
 ## Commit Message and PR Writing Bias
 
@@ -600,6 +704,10 @@ Why: the dominant user-facing value is performance, not internal purity.
 | Reordered existing filters for faster use | `perf` |
 | Fixed existing filter returning wrong results | `fix` |
 | Reimplemented filter internals without visible change | `refactor` |
+| Added unit tests for auth module | `test` |
+| Updated API documentation for pagination | `docs` |
+| Upgraded a CI dependency in GitHub Actions | `chore` |
+| Applied Prettier formatting across the project | `style` |
 
 ## Tie-Breakers
 
@@ -620,5 +728,9 @@ When summarizing rationale internally, use concise language such as:
 - `perf`: `improves the existing checkout flow with fewer steps and clearer feedback`
 - `fix`: `restores correct pagination state after filter changes`
 - `refactor`: `reorganizes data fetching without changing behavior`
+- `test`: `covers token refresh edge cases`
+- `docs`: `documents pagination query parameters`
+- `chore`: `bumps lodash to 4.17.21`
+- `style`: `applies consistent semicolon formatting`
 
 If the change is mixed, choose one primary type and mention secondary aspects in bullets/body rather than inventing a hybrid label.

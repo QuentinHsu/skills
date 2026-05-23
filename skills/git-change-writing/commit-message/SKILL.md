@@ -41,6 +41,26 @@ Important boundary:
 
 Infer optional scope from changed module/path when clear.
 
+**Scope inference by type:**
+
+The scope communicates **impact area** — which part of the system this commit affects. Choose the most specific meaningful unit, not the directory or file name literally.
+
+- **`feat` / `fix` / `perf` / `refactor`**: Infer from the primary changed module, package, component, or feature area. Prefer the most specific meaningful name: `token-refresh` over `auth` when tightly scoped to one sub-area, `auth` when spanning multiple auth concerns. Look at the dominant directory or symbol prefix: `src/auth/login.ts` → `auth`, `components/SearchBox/` → `search-box`.
+- **`test`**: Scope must reflect the **module or feature being tested**, never the test directory (`tests`, `__tests__`) or test level (`unit`, `e2e`). Infer from the test target, not the test file path literally: `tests/auth/test_login.py` → `auth`. If tests span multiple unrelated modules, omit scope.
+- **`docs`**: Use the documented area as scope (e.g., `api`, `setup`, `getting-started`). Use `readme` or `contributing` only when the change is structural (reorganizing sections, updating badges) rather than documenting a specific feature.
+- **`chore`**: Use the affected tool, dependency, or infrastructure area. Dependency bumps → `deps` or the package name. CI/CD → `ci`. Build tooling → `build` or the tool name. Repo-level config → omit scope.
+- **`style`**: Usually omit scope. If formatting targets one area specifically, use that area's name.
+
+**Scope format:**
+- Use **lowercase kebab-case** for multi-word scopes: `dark-mode`, `search-box`, `token-refresh`
+- One scope per commit. For changes touching multiple areas, pick the most impacted area or omit scope.
+- For **monorepos**: prefer the package/app name as scope (e.g., `feat(web): ...`, `fix(api): ...`)
+
+**When to omit scope:**
+- Changes spanning the entire codebase (global formatting, repo-wide config, cross-cutting concerns)
+- No single area is clearly primary
+- Adding a scope would be misleading (suggesting only one area when many changed)
+
 ## Draft Commit Message (Step 3)
 
 Commit message structure:
@@ -62,11 +82,33 @@ Examples:
 
 ### Body (optional)
 
-Add one blank line after Header, then use list format (2-4 bullet points recommended).
+Add one blank line after Header, then use bullet list format (2-4 bullets recommended).
 
-Each bullet should cover **what changed** and **why**. This helps future maintainers understand the reasoning behind the change.
+Each bullet covers **one change and its reason**, helping future readers understand not just what happened but why.
 
-Keep concise and specific, include implementation highlights and impact scope.
+**When to add a body:**
+- Multiple logical steps or files changed with a coherent purpose
+- The motivation, trade-off, or side effect isn't obvious from the diff alone
+- A `fix` has a non-obvious root cause worth documenting
+- A `perf` improvement has measurable or perceivable impact worth noting
+- A `test` addition covers specific edge cases or scenarios worth naming
+- A `feat` has intentional scope boundaries worth clarifying
+
+**When to skip the body:**
+- The subject alone fully describes the change and the diff is self-explanatory
+- Single-line fixes, typo corrections, trivial config changes, small dependency bumps
+- Adding a body would only restate the subject in more words
+
+**Body writing rules:**
+- Use bullet points (`- ` prefix), not prose paragraphs
+- Order by importance — most impactful change first
+- Don't repeat the subject; the body adds detail, not restatement
+- Don't describe what `git diff` already shows (file renames, exact line counts, mechanical refactors)
+- Focus on **decisions and effects**: what behavior changed, what edge case is now handled, what trade-off was accepted
+- For `fix` type: name the symptom and root cause when non-obvious
+- For `perf` type: describe the before/after experience difference or the measurable gain
+- For `test` type: name the key scenarios, edge cases, or boundary conditions covered
+- For `feat` type: clarify scope limits — what the feature does and doesn't cover
 
 ### Footer (optional)
 
@@ -74,10 +116,12 @@ Add one blank line after Body (or after Header if Body omitted).
 
 Use for metadata:
 - Breaking changes: `BREAKING CHANGE: <description>`
-- Issue references: `Closes #123`, `Refs #456`
+- Issue references: `Closes #123` (commit fully resolves the issue), `Refs #456` (related but not resolved)
 - Co-authors/trailers when needed
 
-Footer content should be factual and directly supported by staged diff/context.
+Use `Closes` / `Fixes` / `Resolves` only when the commit fully resolves the referenced issue. Use `Refs` for related issues, partial work, or follow-up items. Never fabricate issue references — only include ones explicitly mentioned in the diff context.
+
+Footer content must be factual and directly supported by staged diff/context.
 
 ## Language, Command Variants, and Output Format (Step 4)
 
@@ -192,6 +236,62 @@ feat(search): support sorting results by updated time
 - add an updated-time sorting option to prioritize recently changed content.
 - switch default ranking from pure relevance to a hybrid strategy for better balance.
 - surface fresh content faster in high-traffic queries to improve recency.
+```
+
+### Test addition (Header + Body)
+
+中文
+
+```text
+test(auth): 补充令牌刷新边界测试
+
+- 覆盖令牌过期前并发刷新场景。
+- 新增刷新失败后重试上限的测试用例。
+- 验证不同环境下的令牌 TTL 兼容性。
+```
+
+English
+
+```text
+test(auth): cover token refresh boundary cases
+
+- add test for concurrent refresh before token expiry.
+- cover retry limit after refresh failure.
+- verify token TTL compatibility across environments.
+```
+
+### Performance improvement (Header + Body)
+
+中文
+
+```text
+perf(table): 大数据集下减少滚动卡顿
+
+- 对可见行采用虚拟化渲染，将 DOM 节点数从 O(n) 降到 O(1)。
+- 表格快速滚动时感官延迟明显降低，万行以上场景改善尤为突出。
+```
+
+English
+
+```text
+perf(table): reduce scroll jank in large datasets
+
+- virtualize visible rows to bring DOM node count from O(n) down to O(1).
+- perceived latency drops noticeably during fast scrolling, especially above 10k rows.
+```
+
+### Dependency update (Header only)
+
+中文
+
+```text
+chore(deps): 升级 lodash 至 4.17.21
+```
+
+English
+
+```text
+chore(deps): bump lodash to 4.17.21
 ```
 
 ### Breaking change (Header + Body + Footer)
