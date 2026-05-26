@@ -45,21 +45,25 @@ Infer optional scope from changed module/path when clear.
 
 The scope communicates **impact area** — which part of the system this commit affects. Choose the most specific meaningful unit, not the directory or file name literally.
 
-- **`feat` / `fix` / `perf` / `refactor`**: Infer from the primary changed module, package, component, or feature area. Prefer the most specific meaningful name: `token-refresh` over `auth` when tightly scoped to one sub-area, `auth` when spanning multiple auth concerns. Look at the dominant directory or symbol prefix: `src/auth/login.ts` → `auth`, `components/SearchBox/` → `search-box`.
-- **`test`**: Scope must reflect the **module or feature being tested**, never the test directory (`tests`, `__tests__`) or test level (`unit`, `e2e`). Infer from the test target, not the test file path literally: `tests/auth/test_login.py` → `auth`. If tests span multiple unrelated modules, omit scope.
-- **`docs`**: Use the documented area as scope (e.g., `api`, `setup`, `getting-started`). Use `readme` or `contributing` only when the change is structural (reorganizing sections, updating badges) rather than documenting a specific feature.
-- **`chore`**: Use the affected tool, dependency, or infrastructure area. Dependency bumps → `deps` or the package name. CI/CD → `ci`. Build tooling → `build` or the tool name. Repo-level config → omit scope.
-- **`style`**: Usually omit scope. If formatting targets one area specifically, use that area's name.
+- **`feat` / `fix` / `perf` / `refactor`**: Infer from the primary changed module, package, component, or feature area. Prefer the most specific meaningful name: `token-refresh` over `auth` when tightly scoped to one sub-area, `auth` when spanning multiple auth concerns. Look at the dominant directory or symbol prefix: `src/auth/login.ts` → `auth`, `components/SearchBox/` → `search-box`. If spanning multiple unrelated modules with no common parent, use `global`.
+- **`test`**: Scope must reflect the **module or feature being tested**, never the test directory (`tests`, `__tests__`) or test level (`unit`, `e2e`). Infer from the test target, not the test file path literally: `tests/auth/test_login.py` → `auth`. If tests span multiple unrelated modules with no common parent, use `global`.
+- **`docs`**: Use the documented area as scope (e.g., `api`, `setup`, `getting-started`). Use `readme` or `contributing` only when the change is structural (reorganizing sections, updating badges) rather than documenting a specific feature. If spanning multiple unrelated documented areas, use `global`.
+- **`chore`**: Use the affected tool, dependency, or infrastructure area. Dependency bumps → `deps` or the package name. CI/CD → `ci`. Build tooling → `build` or the tool name. Changes spanning multiple unrelated infrastructure areas → `global`.
+- **`style`**: If formatting spans multiple unrelated areas, use `global`. If targeting one area specifically, use that area's name. Otherwise, omit scope.
 
 **Scope format:**
 - Use **lowercase kebab-case** for multi-word scopes: `dark-mode`, `search-box`, `token-refresh`
-- One scope per commit. For changes touching multiple areas, pick the most impacted area or omit scope.
+- One scope per commit. For changes touching multiple unrelated areas, use `global` or pick the most impacted area.
+- `global` is the reserved scope for changes spanning multiple unrelated modules with no common parent.
 - For **monorepos**: prefer the package/app name as scope (e.g., `feat(web): ...`, `fix(api): ...`)
 
+**When to use `global` as scope:**
+- Changes span multiple unrelated modules with no common parent
+- No single area is clearly primary and several distinct areas are affected
+
 **When to omit scope:**
-- Changes spanning the entire codebase (global formatting, repo-wide config, cross-cutting concerns)
-- No single area is clearly primary
-- Adding a scope would be misleading (suggesting only one area when many changed)
+- Adding a scope would be actively misleading
+- The commit type alone is self-descriptive and scope adds no meaningful information (e.g., trivial single-file whitespace fix)
 
 ## Draft Commit Message (Step 3)
 
@@ -79,6 +83,17 @@ Examples:
 - ✅ `fix(auth): handle token refresh race`
 - ❌ `fix(auth): Handle token refresh race` (uppercase)
 - ❌ `fix(auth): handled token refresh race` (past tense)
+
+**`test` type subject rules:**
+
+The subject must describe the scenarios or behaviors covered — not the activity of adding tests.
+
+- ✅ `test(parser): cover malformed input fallback` — names the scenario and module
+- ✅ `test(auth): verify token expiry edge cases` — describes what behavior is tested
+- ❌ `test: add service and parsing coverage` — no scope, vague, describes activity not scenarios
+- ❌ `test(auth): add login tests` — describes activity, not what behavior or edge case is verified
+
+Scope must reflect the module or feature being tested (see Classify Change Type above). Only use `global` as scope when tests genuinely span multiple unrelated modules with no common parent.
 
 ### Body (optional)
 
@@ -107,7 +122,7 @@ Each bullet covers **one change and its reason**, helping future readers underst
 - Focus on **decisions and effects**: what behavior changed, what edge case is now handled, what trade-off was accepted
 - For `fix` type: name the symptom and root cause when non-obvious
 - For `perf` type: describe the before/after experience difference or the measurable gain
-- For `test` type: name the key scenarios, edge cases, or boundary conditions covered
+- For `test` type: name the specific scenarios, edge cases, or boundary conditions covered — never restate "add X tests" or "add X coverage"; describe what behavior is now verified
 - For `feat` type: clarify scope limits — what the feature does and doesn't cover
 
 ### Footer (optional)
