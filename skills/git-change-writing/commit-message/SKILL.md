@@ -97,7 +97,7 @@ Scope must reflect the module or feature being tested (see Classify Change Type 
 
 ### Body (optional)
 
-Add one blank line after Header, then use bullet list format (2-4 bullets recommended).
+Add exactly one blank line after Header, then use a tight bullet list format (2-4 bullets recommended).
 
 Each bullet covers **one change and its reason**, helping future readers understand not just what happened but why.
 
@@ -116,6 +116,8 @@ Each bullet covers **one change and its reason**, helping future readers underst
 
 **Body writing rules:**
 - Use bullet points (`- ` prefix), not prose paragraphs
+- Keep the bullet list single-spaced: **never insert blank lines between bullet items**
+- Each bullet should stay a single paragraph; do not create multi-paragraph bullets
 - Order by importance — most impactful change first
 - Don't repeat the subject; the body adds detail, not restatement
 - Don't describe what `git diff` already shows (file renames, exact line counts, mechanical refactors)
@@ -124,6 +126,18 @@ Each bullet covers **one change and its reason**, helping future readers underst
 - For `perf` type: describe the before/after experience difference or the measurable gain
 - For `test` type: name the specific scenarios, edge cases, or boundary conditions covered — never restate "add X tests" or "add X coverage"; describe what behavior is now verified
 - For `feat` type: clarify scope limits — what the feature does and doesn't cover
+
+**Required spacing skeleton:**
+
+```text
+type(scope): subject
+
+- first detail
+- second detail
+- third detail
+```
+
+Only the separator between Header and Body may be blank. Adjacent body bullets must stay contiguous with no empty lines between them.
 
 ### Footer (optional)
 
@@ -381,6 +395,7 @@ Expected behavior:
 - Do not fabricate changes not present in staged diff
 - Keep terminology consistent with actual code symbols and file paths
 - Keep body concise but informative for future review
+- For Header + Body output, allow exactly one blank line between sections and zero blank lines between adjacent bullets
 - In `auto` mode, execute exactly one commit against the staged changes only
 - In `auto` mode, commit only the clean generated git message; do not append AI or tool attribution trailers
 - Never claim a commit succeeded unless Git actually reports success

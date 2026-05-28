@@ -73,6 +73,11 @@ Generate Conventional Commits output:
 
 Keep header ≤ 72 chars (Git tools truncate longer headers).
 
+When Body is present, format it as a tight single-spaced bullet list:
+- add exactly one blank line between Header and Body
+- use contiguous `- ` bullets with **no blank lines between bullet items**
+- keep each bullet a single paragraph
+
 English subject starts with lowercase (Conventional Commits spec requirement).
 
 Chinese subject written in Simplified Chinese (`type(scope)` remains in English — they are Conventional Commits keywords).
@@ -180,6 +185,8 @@ English
 - <what + why>
 - <what + why>
 ```
+
+Do not insert empty lines between adjacent bullet items inside the commit body.
 
 PR Title
 
