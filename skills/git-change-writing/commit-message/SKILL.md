@@ -117,6 +117,7 @@ Each bullet covers **one change and its reason**, helping future readers underst
 **Body writing rules:**
 - Use bullet points (`- ` prefix), not prose paragraphs
 - Keep the bullet list single-spaced: **never insert blank lines between bullet items**
+- Before returning or committing the message, remove any empty line that appears between two adjacent body bullet items
 - Each bullet should stay a single paragraph; do not create multi-paragraph bullets
 - Order by importance — most impactful change first
 - Don't repeat the subject; the body adds detail, not restatement
@@ -186,6 +187,11 @@ Slash-command execution hint:
 
 If `auto` is not present, stay in preview mode and only output copy-ready commit message text.
 
+Before outputting preview code blocks, run a final formatting check on each commit message:
+- exactly one blank line may separate Header from Body
+- zero blank lines may appear between adjacent `- ` body bullets
+- exactly one blank line may separate Body from Footer when a Footer exists
+
 ## Auto Commit Execution (Step 5)
 
 If the request explicitly includes `auto` (for example `/commit-message en auto`) or clearly asks you to commit immediately, switch from preview mode to execution mode.
@@ -196,9 +202,10 @@ Execution rules:
 2. Use that exact message content to commit the staged changes automatically.
 3. Preserve header/body/footer formatting exactly, including blank lines and trailers.
 4. Prefer a full-message commit input path that safely supports multiline content (for example a commit message file or another equivalent full-text mechanism), instead of collapsing everything into a single-line header.
-5. Do not ask an extra "should I commit now" question when the user has already chosen `auto`.
-6. Keep the final auto-commit message clean and content-derived: do not append attribution or co-author trailers that were not explicitly requested and factually justified.
-7. In particular, never auto-commit messages containing AI/provider attribution lines such as `Co-Authored-By: Claude Opus 4.7 <noreply@anthropic.com>` or similar generated identity markers.
+5. Run the same final formatting check used for preview output before invoking `git commit`; do not commit while adjacent body bullets are separated by blank lines.
+6. Do not ask an extra "should I commit now" question when the user has already chosen `auto`.
+7. Keep the final auto-commit message clean and content-derived: do not append attribution or co-author trailers that were not explicitly requested and factually justified.
+8. In particular, never auto-commit messages containing AI/provider attribution lines such as `Co-Authored-By: Claude Opus 4.7 <noreply@anthropic.com>` or similar generated identity markers.
 
 If staged diff is empty, stop with the same short reminder defined in Step 1.
 
