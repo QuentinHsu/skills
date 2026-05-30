@@ -67,6 +67,8 @@ The scope communicates **impact area** — which part of the system this commit 
 
 ## Draft Commit Message (Step 3)
 
+Draft the commit message as structured content first, then normalize it in Step 4 before showing or committing it.
+
 Commit message structure:
 
 ### Header (required)
@@ -153,7 +155,37 @@ Use `Closes` / `Fixes` / `Resolves` only when the commit fully resolves the refe
 
 Footer content must be factual and directly supported by staged diff/context.
 
-## Language, Command Variants, and Output Format (Step 4)
+## Normalize Final Message (Step 4)
+
+Always run the generated message through `scripts/format_commit_message.py` before preview output or auto commit.
+
+Use this pipeline:
+
+1. Draft the full commit message in a temporary file or heredoc.
+2. Run:
+
+   ```bash
+   python3 skills/git-change-writing/commit-message/scripts/format_commit_message.py <draft-file>
+   ```
+
+3. Use the script output as the only final commit message.
+4. Do not hand-edit spacing after script output unless correcting content; if content changes, run the script again.
+
+The script is the source of truth for spacing:
+- one blank line between Header and Body when Body exists
+- zero blank lines between adjacent `- ` body bullets
+- one blank line between Body and Footer when Footer exists
+- no leading or trailing blank lines
+
+If the skill is running from an installed copy outside this repository, resolve the script relative to the loaded `SKILL.md` directory:
+
+```bash
+python3 <skill-dir>/scripts/format_commit_message.py <draft-file>
+```
+
+Never return or commit a message that bypasses this normalization step.
+
+## Language, Command Variants, and Output Format (Step 5)
 
 See [_shared/bilingual-output.md](../_shared/bilingual-output.md) for bilingual output rules.
 
@@ -187,25 +219,24 @@ Slash-command execution hint:
 
 If `auto` is not present, stay in preview mode and only output copy-ready commit message text.
 
-Before outputting preview code blocks, run a final formatting check on each commit message:
-- exactly one blank line may separate Header from Body
-- zero blank lines may appear between adjacent `- ` body bullets
-- exactly one blank line may separate Body from Footer when a Footer exists
+Before outputting preview code blocks, normalize each language's commit message with `scripts/format_commit_message.py`.
 
-## Auto Commit Execution (Step 5)
+## Auto Commit Execution (Step 6)
 
 If the request explicitly includes `auto` (for example `/commit-message en auto`) or clearly asks you to commit immediately, switch from preview mode to execution mode.
 
 Execution rules:
 
-1. Read staged diff and draft the final commit message in exactly one target language.
-2. Use that exact message content to commit the staged changes automatically.
-3. Preserve header/body/footer formatting exactly, including blank lines and trailers.
-4. Prefer a full-message commit input path that safely supports multiline content (for example a commit message file or another equivalent full-text mechanism), instead of collapsing everything into a single-line header.
-5. Run the same final formatting check used for preview output before invoking `git commit`; do not commit while adjacent body bullets are separated by blank lines.
-6. Do not ask an extra "should I commit now" question when the user has already chosen `auto`.
-7. Keep the final auto-commit message clean and content-derived: do not append attribution or co-author trailers that were not explicitly requested and factually justified.
-8. In particular, never auto-commit messages containing AI/provider attribution lines such as `Co-Authored-By: Claude Opus 4.7 <noreply@anthropic.com>` or similar generated identity markers.
+1. Read staged diff and draft the commit message in exactly one target language.
+2. Write the draft message to a temporary file.
+3. Run `scripts/format_commit_message.py` and write its output to the final commit message file.
+4. Use the normalized file with `git commit -F <final-message-file>`.
+5. Preserve normalized header/body/footer formatting exactly, including blank lines and trailers.
+6. Never pass the draft message directly to `git commit`.
+7. Prefer a full-message commit input path that safely supports multiline content, instead of collapsing everything into a single-line header.
+8. Do not ask an extra "should I commit now" question when the user has already chosen `auto`.
+9. Keep the final auto-commit message clean and content-derived: do not append attribution or co-author trailers that were not explicitly requested and factually justified.
+10. In particular, never auto-commit messages containing AI/provider attribution lines such as `Co-Authored-By: Claude Opus 4.7 <noreply@anthropic.com>` or similar generated identity markers.
 
 If staged diff is empty, stop with the same short reminder defined in Step 1.
 
