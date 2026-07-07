@@ -14,19 +14,19 @@ Title and Description are output as separate copy-ready blocks because GitHub ha
 
 ## Context Reuse (Step 0)
 
-See [_shared/context-reuse.md](../_shared/context-reuse.md) for the context reuse protocol.
+See [_shared/context-reuse.md](./_shared/context-reuse.md) for the context reuse protocol.
 
 If `DIFF_CONTEXT` or `RAW_DIFF` is already provided, use it directly to save time and tokens.
 
 ## Gather Change Context (Step 1)
 
-See [_shared/branch-diff-gathering.md](../_shared/branch-diff-gathering.md) for branch diff collection details.
+See [_shared/branch-diff-gathering.md](./_shared/branch-diff-gathering.md) for branch diff collection details.
 
 Use **branch-level diff** as primary source (compare current branch against base branch). This gives you the full picture of what's changing in the PR.
 
 ## Determine PR Type (Step 2)
 
-See [_shared/type-classification.md](../_shared/type-classification.md) for the detailed classification rules.
+See [_shared/type-classification.md](./_shared/type-classification.md) for the detailed classification rules.
 
 Select one primary type based on change intent:
 - `feat`: new feature
@@ -50,7 +50,7 @@ Keep title concise and specific. Focus on what changed, not how you analyzed it.
 
 ## Generate Description by Type (Step 4)
 
-See [_shared/pr-heading-map.md](../_shared/pr-heading-map.md) for the complete heading map.
+See [_shared/pr-heading-map.md](./_shared/pr-heading-map.md) for the complete heading map.
 
 **Why fixed headings matter:**
 - Consistent headings help teams quickly scan PRs and find relevant sections
@@ -79,7 +79,7 @@ Use the exact heading text from the map (no synonyms) and keep the exact order. 
 
 ## Language and Output Format (Step 5)
 
-See [_shared/bilingual-output.md](../_shared/bilingual-output.md) for bilingual output rules.
+See [_shared/bilingual-output.md](./_shared/bilingual-output.md) for bilingual output rules.
 
 Default: output both 简体中文 and English versions (semantically aligned, not word-for-word translation).
 

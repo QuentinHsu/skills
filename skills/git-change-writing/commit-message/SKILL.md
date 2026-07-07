@@ -14,7 +14,7 @@ When the user explicitly requests execution mode (for example `/commit-message e
 
 ## Context Reuse (Step 0)
 
-See [_shared/context-reuse.md](../_shared/context-reuse.md) for the context reuse protocol.
+See [_shared/context-reuse.md](./_shared/context-reuse.md) for the context reuse protocol.
 
 If `DIFF_CONTEXT` or `RAW_DIFF` is already provided, use it directly to save time and tokens.
 
@@ -26,7 +26,7 @@ If staged diff is empty, simply remind the user to stage files first. Keep the m
 
 ## Classify Change Type (Step 2)
 
-See [_shared/type-classification.md](../_shared/type-classification.md) for the detailed classification rules.
+See [_shared/type-classification.md](./_shared/type-classification.md) for the detailed classification rules.
 
 Infer the most suitable Conventional Commits type:
 - `feat`, `fix`, `refactor`, `docs`, `style`, `chore`, `perf`, `test`
@@ -187,7 +187,7 @@ Never return or commit a message that bypasses this normalization step.
 
 ## Language, Command Variants, and Output Format (Step 5)
 
-See [_shared/bilingual-output.md](../_shared/bilingual-output.md) for bilingual output rules.
+See [_shared/bilingual-output.md](./_shared/bilingual-output.md) for bilingual output rules.
 
 Default: output both 简体中文 and English versions.
 

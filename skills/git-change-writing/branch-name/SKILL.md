@@ -12,13 +12,13 @@ Generate clean, team-friendly Git branch names based on current code changes.
 
 ## Context Reuse (Step 0)
 
-See [_shared/context-reuse.md](../_shared/context-reuse.md) for the context reuse protocol.
+See [_shared/context-reuse.md](./_shared/context-reuse.md) for the context reuse protocol.
 
 If `DIFF_CONTEXT` or `RAW_DIFF` is already provided, use it directly to save time and tokens.
 
 ## Gather Change Context (Step 1)
 
-See [_shared/branch-diff-gathering.md](../_shared/branch-diff-gathering.md) for branch diff collection details.
+See [_shared/branch-diff-gathering.md](./_shared/branch-diff-gathering.md) for branch diff collection details.
 
 Use **branch-level diff** as primary source (compare current branch against base branch). This gives you the full picture of what's changing.
 
@@ -26,7 +26,7 @@ Optionally read commit history to improve intent inference across multiple commi
 
 ## Infer Intent and Type (Step 2)
 
-See [_shared/type-classification.md](../_shared/type-classification.md) for the detailed classification rules.
+See [_shared/type-classification.md](./_shared/type-classification.md) for the detailed classification rules.
 
 Determine primary intent from changes:
 - `feature` (new capability)

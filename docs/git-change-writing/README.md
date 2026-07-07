@@ -22,12 +22,14 @@ This skill set helps generate Git-related writing artifacts (branch names, commi
 
 **How:** Build a shared `DIFF_CONTEXT` once, then reuse it across all outputs. The `change-pack` skill demonstrates this pattern by generating branch name, commit message, and PR content from a single diff analysis.
 
-**Shared mechanism:** The `_shared/` directory contains reusable reference files:
+**Shared mechanism:** The top-level `_shared/` directory is the maintenance source for reusable reference files. Each installable skill also carries a local `_shared/` copy so direct single-skill installs keep relative references valid.
 - `context-reuse.md` - Context reuse protocol
 - `branch-diff-gathering.md` - How to collect branch-level changes
 - `bilingual-output.md` - Bilingual output formatting
 - `pr-heading-map.md` - Type-specific PR section headings
 - `type-classification.md` - Shared rules for choosing `feat|perf|fix|refactor|...`
+
+When changing shared guidance, update `skills/git-change-writing/_shared/` first, then sync the same files into each skill-local `_shared/` directory.
 
 ### 2. Branch-Level Diff First
 

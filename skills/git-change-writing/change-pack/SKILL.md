@@ -16,14 +16,14 @@ PR Title and PR Description are output as separate copy-ready blocks because Git
 
 ## Context Reuse (Step 0)
 
-See [_shared/context-reuse.md](../_shared/context-reuse.md) for the context reuse protocol.
+See [_shared/context-reuse.md](./_shared/context-reuse.md) for the context reuse protocol.
 
 If `DIFF_CONTEXT` or `RAW_DIFF` is already provided, use it directly to save time and tokens.
 
 ## Build Shared DIFF_CONTEXT (Step 1)
 
-See [_shared/branch-diff-gathering.md](../_shared/branch-diff-gathering.md) for branch diff collection details.
-See [_shared/type-classification.md](../_shared/type-classification.md) for detailed intent classification rules.
+See [_shared/branch-diff-gathering.md](./_shared/branch-diff-gathering.md) for branch diff collection details.
+See [_shared/type-classification.md](./_shared/type-classification.md) for detailed intent classification rules.
 
 Use **branch-level diff** as primary source (compare current branch against base branch).
 
@@ -86,7 +86,7 @@ Chinese subject written in Simplified Chinese (`type(scope)` remains in English 
 
 Generate `Title` + `Description` in Markdown.
 
-Type-driven sections with fixed headings (see [_shared/pr-heading-map.md](../_shared/pr-heading-map.md)).
+Type-driven sections with fixed headings (see [_shared/pr-heading-map.md](./_shared/pr-heading-map.md)).
 
 **Why fixed headings:** Consistent headings help teams quickly scan PRs and automated tools parse descriptions reliably.
 
@@ -120,7 +120,7 @@ Reuse terms from `DIFF_CONTEXT.terms` to avoid wording drift between outputs.
 
 ## Language Behavior (Step 3)
 
-See [_shared/bilingual-output.md](../_shared/bilingual-output.md) for bilingual output rules.
+See [_shared/bilingual-output.md](./_shared/bilingual-output.md) for bilingual output rules.
 
 Default: Simplified Chinese + English (semantically aligned, not word-for-word translation).
 

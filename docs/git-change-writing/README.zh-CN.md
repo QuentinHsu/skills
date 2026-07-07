@@ -22,12 +22,14 @@ English version: [`README.md`](README.md)
 
 **怎么做：** 构建一次共享的 `DIFF_CONTEXT`，然后在所有输出中复用。`change-pack` 技能展示了这个模式，从一次 diff 分析生成分支名、commit 信息和 PR 内容。
 
-**共享机制：** `_shared/` 目录包含可复用的参考文件：
+**共享机制：** 顶层 `_shared/` 目录是可复用参考文件的维护源。每个可安装 skill 也会携带一个本地 `_shared/` 副本，这样直接安装单个 skill 时，相对引用仍然有效。
 - `context-reuse.md` - 上下文复用协议
 - `branch-diff-gathering.md` - 如何收集分支级变更
 - `bilingual-output.md` - 双语输出格式
 - `pr-heading-map.md` - 按类型划分的 PR 章节标题
 - `type-classification.md` - 选择 `feat|perf|fix|refactor|...` 的共享判定规则
+
+修改共享指南时，先更新 `skills/git-change-writing/_shared/`，再同步到每个 skill 内部的 `_shared/` 目录。
 
 ### 2. 分支级 diff 优先
 
