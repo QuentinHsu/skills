@@ -86,6 +86,10 @@ Chinese subject written in Simplified Chinese (`type(scope)` remains in English 
 
 Generate `Title` + `Description` in Markdown.
 
+PR Title uses the same header shape as Commit Message: `type(scope): subject`.
+
+Use the same inferred type and scope as the commit header unless the PR genuinely spans a broader meaningful area. Keep `type(scope)` in English for both Chinese and English titles.
+
 Type-driven sections with fixed headings (see [_shared/pr-heading-map.md](./_shared/pr-heading-map.md)).
 
 **Why fixed headings:** Consistent headings help teams quickly scan PRs and automated tools parse descriptions reliably.
@@ -112,7 +116,7 @@ Keep claims grounded in `DIFF_CONTEXT` facts.
 
 ### Output Consistency
 
-Branch prefix, commit type, and PR title type should be semantically aligned with `intent` whenever possible. This creates a coherent story across all three artifacts.
+Branch prefix, commit type, commit scope, PR title type, and PR title scope should be semantically aligned with `intent` whenever possible. This creates a coherent story across all three artifacts.
 
 If a change includes both polish and capability work, let the dominant outcome decide the shared `intent` once, then reuse it consistently across branch / commit / PR.
 
@@ -126,7 +130,7 @@ Default: Simplified Chinese + English (semantically aligned, not word-for-word t
 
 If user requests one language, output only requested language.
 
-When bilingual, Chinese and English must each be wrapped in independent code blocks in every section.
+When bilingual, Chinese and English must each be wrapped in independent code blocks in every section except `Branch Name`.
 
 Each language version must be written entirely in its respective language — not one version copied and relabeled.
 
@@ -149,7 +153,7 @@ Output in order:
 
 For each section, provide bilingual or single-language content based on request.
 
-**Exception:** Branch Name is always English only (no bilingual output needed — branch names are English tokens).
+**Exception:** Branch Name is always English-only and each candidate gets its own copy-ready code block (no bilingual output needed — branch names are English tokens).
 
 In bilingual mode, each section (except Branch Name) contains exactly two copy-ready code blocks (one for `中文`, one for `English`).
 
@@ -159,11 +163,22 @@ Language label line (`中文` / `English`) appears immediately above its corresp
 
 Branch Name
 
+Recommended
+
 ```text
-Recommended: <prefix/slug>
-Alternatives:
-- <prefix/slug-2>
-- <prefix/slug-3>
+<prefix/slug>
+```
+
+Alternative 1
+
+```text
+<prefix/slug-2>
+```
+
+Alternative 2
+
+```text
+<prefix/slug-3>
 ```
 
 Commit Message
@@ -193,13 +208,13 @@ PR Title
 中文
 
 ```text
-<type: brief description>
+<type(scope): subject>
 ```
 
 English
 
 ```text
-<type: brief description>
+<type(scope): subject>
 ```
 
 PR Description
@@ -238,22 +253,22 @@ Expected chained output:
 
 Branch Name
 
-中文
+Recommended
 
 ```text
-Recommended: fix/auth-token-refresh-race
-Alternatives:
-- fix/auth-refresh-lock
-- test/auth-refresh-race-coverage
+fix/auth-token-refresh-race
 ```
 
-English
+Alternative 1
 
 ```text
-Recommended: fix/auth-token-refresh-race
-Alternatives:
-- fix/auth-refresh-lock
-- test/auth-refresh-race-coverage
+fix/auth-refresh-lock
+```
+
+Alternative 2
+
+```text
+test/auth-refresh-race-coverage
 ```
 
 Commit Message
@@ -281,13 +296,13 @@ PR Title
 中文
 
 ```text
-fix: 防止认证 token 刷新竞态
+fix(auth): 防止认证 token 刷新竞态
 ```
 
 English
 
 ```text
-fix: prevent auth token refresh race
+fix(auth): prevent auth token refresh race
 ```
 
 PR Description
@@ -322,9 +337,9 @@ English
 
 Quick verification:
 - All sections generated from one shared `DIFF_CONTEXT` (no repeated full-diff reads)
-- Branch prefix, commit type, and PR title type are semantically aligned with `intent`
+- Branch prefix, commit header, and PR title header are semantically aligned with `intent`
 - PR description headings follow the type-specific map (see _shared/pr-heading-map.md)
-- In bilingual mode, each section uses independent code blocks for each language
+- In bilingual mode, each non-branch section uses independent code blocks for each language
 - Statements are factual and grounded in `DIFF_CONTEXT` only
 
 If something doesn't look right, adjust and regenerate only the failing section(s).

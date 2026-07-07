@@ -44,9 +44,17 @@ The type drives the PR description structure (different types need different sec
 
 ## Generate Title (Step 3)
 
-Format: `<type>: <brief description>`
+Format: `type(scope): subject`
+
+Use the same scope inference rules as `commit-message`: choose the most specific meaningful impact area, use lowercase kebab-case for multi-word scopes, use `global` only when changes span unrelated areas, and omit scope only when adding one would be misleading.
 
 Keep title concise and specific. Focus on what changed, not how you analyzed it.
+
+Title rules:
+- keep the same type as the PR description section map
+- keep the subject short enough for GitHub lists and notifications
+- English subject starts with lowercase, matching Conventional Commits
+- Chinese subject is written in Simplified Chinese while `type(scope)` remains in English
 
 ## Generate Description by Type (Step 4)
 
@@ -96,6 +104,7 @@ If user explicitly requests single language, output only that language.
 
 Quick verification:
 - Type is clear and matches the actual changes
+- PR Title follows `type(scope): subject` and uses a meaningful scope when one is clear
 - Headings follow the type-specific map (see _shared/pr-heading-map.md)
 - In bilingual mode, each language has its own code blocks
 - All claims are grounded in the actual diff
@@ -109,13 +118,13 @@ PR Title
 中文
 
 ```text
-<type>: <brief description>
+<type(scope): subject>
 ```
 
 English
 
 ```text
-<type>: <brief description>
+<type(scope): subject>
 ```
 
 PR Description
@@ -141,13 +150,13 @@ PR Title
 中文
 
 ```text
-fix: 防止认证 token 刷新竞态
+fix(auth): 防止认证 token 刷新竞态
 ```
 
 English
 
 ```text
-fix: prevent auth token refresh race
+fix(auth): prevent auth token refresh race
 ```
 
 PR Description

@@ -45,7 +45,9 @@ English version: [`README.md`](README.md)
 
 **怎么做：**
 - 每个输出都包裹在代码块中
+- 每个分支名候选项都有独立的仅英文代码块
 - PR Title 和 PR Description 是独立的块（GitHub 有两个输入框）
+- PR Title 和 commit 信息使用相同的 `type(scope): subject` 头部形态
 - 双语输出为每种语言使用独立的块
 
 ### 4. 解释为什么，不只是说什么

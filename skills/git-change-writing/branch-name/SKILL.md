@@ -87,17 +87,31 @@ If intent is ambiguous, include one neutral fallback like `chore/<area>-cleanup`
 Branch names are always English tokens — output **English only** (no bilingual output needed).
 
 **Output structure:**
-- `Recommended:` one best branch name
-- `Alternatives:` two additional candidates
+- `Recommended` label above the best branch name
+- `Alternative 1` and `Alternative 2` labels above the two additional candidates
 - optional one-line rationale per candidate
+- Wrap each branch name candidate in its own `text` code block for direct copying
+- Output exactly three branch name code blocks by default
+- Keep labels outside code blocks so copying a block copies only the branch name
 
 ## Example Output
 
+Recommended
+
 ```text
-Recommended: fix/auth-token-refresh-race
-Alternatives:
-- fix/auth-refresh-lock
-- refactor/auth-token-renewal-flow
+fix/auth-token-refresh-race
+```
+
+Alternative 1
+
+```text
+fix/auth-refresh-lock
+```
+
+Alternative 2
+
+```text
+refactor/auth-token-renewal-flow
 ```
 
 ## Conventions

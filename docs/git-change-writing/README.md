@@ -45,7 +45,9 @@ When changing shared guidance, update `skills/git-change-writing/_shared/` first
 
 **How:**
 - Every output is wrapped in a code block
+- Each branch name candidate gets its own English-only code block
 - PR Title and PR Description are separate blocks (GitHub has two input fields)
+- PR Title follows the same `type(scope): subject` header shape as commit messages
 - Bilingual outputs use independent blocks for each language
 
 ### 4. Explain Why, Not Just What
