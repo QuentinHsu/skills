@@ -1,9 +1,9 @@
 ---
 name: commit-message
-description: Generate conventional commit messages from staged git diff. Use this skill whenever the user asks to generate a commit message, write commit text, create a conventional commit, or says things like '生成 commit', '写 commit message', '根据暂存区生成提交说明', 'generate commit message from staged diff', 'write a conventional commit', 'what should my commit say', 'help me commit this', '/commit-message en auto', '/commit-message zh auto', '直接用生成的 commit message 提交暂存区', or 'generate and auto commit staged changes'. Also trigger when you see requests to follow Conventional Commits format or when the user has staged changes and asks about committing.
+description: "Generate a Conventional Commits message from the staged diff, and optionally commit it. Use when the user wants a commit message or wants to commit staged changes, e.g. '生成 commit', '写 commit message', 'write a commit message', '/commit-message zh auto'."
 metadata:
   author: QuentinHsu
-  version: "2026.05.21"
+  version: "2026.11.19"
 ---
 
 # Commit Message

@@ -1,9 +1,9 @@
 ---
 name: refactor-migrate
-description: Migrate dependencies, frameworks, or runtime versions with minimal breakage. Use this skill when upgrading libraries, switching frameworks, replacing deprecated APIs, bumping language/runtime versions, or says things like '升级依赖', '迁移到新版本', '替换废弃 API', 'upgrade to v4', 'migrate from X to Y', 'replace deprecated calls', 'bump Node/Python/Go version', 'framework migration', or 'dependency upgrade'. Also trigger when handling breaking changes from a version bump.
+description: "Migrate dependencies, frameworks, or runtime versions with minimal breakage, including deprecated API replacement and breaking-change handling. Use for upgrades and migrations, e.g. '升级依赖', '替换废弃 API', 'upgrade to v4', 'migrate from X to Y'."
 metadata:
   author: QuentinHsu
-  version: "2026.04.05"
+  version: "2026.11.19"
 ---
 
 # Refactor Migrate

@@ -1,9 +1,9 @@
 ---
 name: data-sanitization
-description: Use when handling local, private, customer, production, or real-world data that may be uploaded, shared, pasted into an external service, used with remote tools, or included in prompts, logs, screenshots, files, examples, or analysis artifacts.
+description: "Redact or replace real, private, customer, or production data with sanitized substitutes before it leaves the local environment. Use before uploading, pasting, or sending local data to remote tools, models, tickets, PRs, logs, or screenshots, or when unsure whether data is sensitive."
 metadata:
   author: QuentinHsu
-  version: "2026.05.10"
+  version: "2026.11.19"
 ---
 
 # Data Sanitization

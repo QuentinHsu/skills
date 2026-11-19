@@ -1,9 +1,9 @@
 ---
 name: change-pack
-description: Generate branch name, commit message, and PR content from one shared diff context. Use this skill whenever the user asks to generate multiple git writing artifacts at once, wants to save time by analyzing changes once, or says things like '一口气生成分支名、commit、PR 内容', '链式生成 git 文案', '一次分析改动生成全部', 'generate branch + commit + PR from same diff', 'generate everything', 'all git content from this diff', 'chain generate', or 'one-shot git writing'. This is more efficient than calling individual skills separately because it reads the diff only once and reuses the context.
+description: "Generate branch name, commit message, and PR content together from a single diff analysis. Use when the user wants more than one git writing artifact at once, e.g. '一次生成分支名、commit 和 PR', 'generate branch + commit + PR', 'all git content from this diff'."
 metadata:
   author: QuentinHsu
-  version: "2026.03.07"
+  version: "2026.11.19"
 ---
 
 # Change Pack

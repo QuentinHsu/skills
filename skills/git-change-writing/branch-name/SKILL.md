@@ -1,9 +1,9 @@
 ---
 name: branch-name
-description: Generate Git branch names from current branch changes against a base branch. Use this skill whenever the user mentions branch naming, wants to create/rename a branch based on their work, asks for branch name suggestions, or says things like '给这个分支起个名字', '生成分支名', '根据改动起一个 branch 名', 'suggest branch name from diff', 'name this branch based on changes', 'what should I call this branch', or 'name this feature branch'. Also trigger when you see diff-based naming requests or when the user has uncommitted work and asks about branching.
+description: "Suggest Git branch names from the current changes against a base branch. Use when the user wants to name, create, or rename a branch based on their work, e.g. '生成分支名', '给这个分支起个名字', 'suggest a branch name', 'name this branch'."
 metadata:
   author: QuentinHsu
-  version: "2026.03.07"
+  version: "2026.11.19"
 ---
 
 # Branch Name

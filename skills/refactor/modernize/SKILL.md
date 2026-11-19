@@ -1,9 +1,9 @@
 ---
 name: refactor-modernize
-description: Modernize code by replacing legacy patterns with current language features and idiomatic conventions. Use this skill when rewriting old-style code to use modern syntax, adopting new language features, replacing callbacks with async/await, using pattern matching instead of switch, applying modern iteration, or says things like '用现代写法重写', '替换旧语法', '用 async/await 重写回调', 'modernize this code', 'use modern syntax', 'replace legacy patterns', 'convert to async/await', 'use destructuring', 'apply modern idioms', or 'rewrite with current best practices'. Also trigger when adopting new edition features (Rust editions, Python 3.10+ features, ES2024, etc.).
+description: "Replace legacy patterns with current language features and idioms, such as callbacks to async/await or newer edition syntax. Use when updating old-style code, e.g. '用现代写法重写', '替换旧语法', 'modernize this code', 'convert to async/await'."
 metadata:
   author: QuentinHsu
-  version: "2026.04.05"
+  version: "2026.11.19"
 ---
 
 # Refactor Modernize

@@ -1,9 +1,9 @@
 ---
 name: readme-public-app
-description: Generate or update README files for public-facing apps, libraries, CLI tools, API services, monorepos, internal tools, skills, and plugins. Use this skill when the user asks to write, generate, polish, or update README/project documentation, generate docs from code, or says things like '写 README', '生成项目文档', '帮我整理 README', 'write a README', 'create project docs', 'generate readme for this project'.
+description: "Write or update README files for apps, libraries, CLIs, API services, monorepos, internal tools, skills, and plugins, based on the actual code. Use when the user asks for a README or project docs, e.g. '写 README', '帮我整理 README', 'write a README', 'generate project docs'."
 metadata:
   author: QuentinHsu
-  version: "2026.05.04"
+  version: "2026.11.19"
 ---
 
 # Public App README

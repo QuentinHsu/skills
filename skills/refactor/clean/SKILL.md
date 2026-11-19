@@ -1,9 +1,9 @@
 ---
 name: refactor-clean
-description: Perform clean refactoring on any codebase — remove dead code, simplify logic, improve naming, extract abstractions, and reduce complexity without changing behavior. Use this skill when the user asks to clean up code, refactor for readability, reduce complexity, remove unused code, simplify conditionals, flatten nesting, rename for clarity, or says things like '重构一下这段代码', '清理无用代码', '简化逻辑', 'clean up this code', 'refactor for readability', 'reduce complexity', 'remove dead code', 'simplify this function', 'flatten nesting', or 'make this easier to read'. Also trigger when reviewing code quality or performing tech debt cleanup.
+description: "Behavior-preserving cleanup: remove dead code, simplify logic, flatten nesting, improve naming, and reduce complexity. Use for readability refactors or tech-debt cleanup, e.g. '重构一下这段代码', '清理无用代码', 'clean up this code', 'simplify this function'."
 metadata:
   author: QuentinHsu
-  version: "2026.04.05"
+  version: "2026.11.19"
 ---
 
 # Code Refactor Clean

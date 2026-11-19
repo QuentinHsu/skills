@@ -1,9 +1,9 @@
 ---
 name: pr-content
-description: Generate GitHub Pull Request title and description from branch changes. Use this skill whenever the user asks to create PR content, draft a pull request, write PR description, or says things like '生成 PR 内容', '写 PR 描述', '帮我整理 PR 标题和正文', 'generate PR content', 'write PR title and description', 'draft pull request description', 'what should my PR say', or 'help me write this PR'. Also trigger when you see requests for PR templates, PR summaries, or when the user is preparing to open a pull request.
+description: "Generate a GitHub pull request title and description from the current branch's diff against its base. Use when the user is preparing to open a PR or wants PR text, e.g. '生成 PR 内容', '写 PR 描述', 'write PR description', 'draft pull request'."
 metadata:
   author: QuentinHsu
-  version: "2026.03.07"
+  version: "2026.11.19"
 ---
 
 # PR Content

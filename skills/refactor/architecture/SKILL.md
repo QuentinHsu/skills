@@ -1,9 +1,9 @@
 ---
 name: refactor-architecture
-description: Restructure module boundaries, dependency directions, and responsibility assignments to improve system organization. Use this skill when splitting monoliths, extracting modules, reorganizing layers, inverting dependencies, separating concerns, or says things like '重新划分模块', '拆分这个大模块', '调整分层架构', '解耦这些模块', 'split this module', 'extract a service layer', 'reorganize project structure', 'invert dependency', 'separate concerns', 'decouple these components', 'introduce hexagonal architecture', or 'restructure the codebase'. Also trigger when reducing circular dependencies or introducing architectural boundaries.
+description: "Restructure module boundaries, dependency direction, and responsibilities: split modules, extract layers, invert dependencies, break cycles. Use for structural reorganization, e.g. '拆分这个大模块', '解耦这些模块', 'split this module', 'decouple these components'."
 metadata:
   author: QuentinHsu
-  version: "2026.04.05"
+  version: "2026.11.19"
 ---
 
 # Refactor Architecture
