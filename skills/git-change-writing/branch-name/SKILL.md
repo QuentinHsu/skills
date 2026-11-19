@@ -26,9 +26,7 @@ Optionally read commit history to improve intent inference across multiple commi
 
 ## Infer Intent and Type (Step 2)
 
-See [_shared/type-classification.md](./_shared/type-classification.md) for the detailed classification rules.
-
-Determine primary intent from changes:
+Classify by primary user-facing value following [_shared/type-classification.md](./_shared/type-classification.md), then map to the branch intent:
 - `feature` (new capability)
 - `bugfix` (defect fix)
 - `performance` (same capability, better experience / UI / interaction)
@@ -37,11 +35,6 @@ Determine primary intent from changes:
 - `chore` (maintenance/tooling)
 - `test` (tests only)
 
-Use the dominant user-facing outcome:
-- choose `feature` only when the branch adds a net-new capability or workflow
-- choose `performance` when the branch mainly improves speed, smoothness, clarity, UI polish, or interaction flow without changing actual utility
-- for UI-only or UX-only improvements, prefer `performance` over `feature`
-- if behavior was broken and is now corrected, prefer `bugfix`
 
 Extract 2-5 keywords from modified modules, entities, or behavior. These keywords will form the branch name slug.
 

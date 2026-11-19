@@ -29,7 +29,7 @@ English version: [`README.md`](README.md)
 - `pr-heading-map.md` - 按类型划分的 PR 章节标题
 - `type-classification.md` - 选择 `feat|perf|fix|refactor|...` 的共享判定规则
 
-修改共享指南时，先更新 `skills/git-change-writing/_shared/`，再同步到每个 skill 内部的 `_shared/` 目录。
+修改共享指南时，只改顶层的 `skills/git-change-writing/_shared/`，然后执行 `node scripts/sync-shared.mjs`。脚本只会把文件复制到实际引用它的技能里；副本和源文件不一致时 CI 会报错。
 
 ### 2. 分支级 diff 优先
 
@@ -100,121 +100,7 @@ UI/UX 的关键边界：
 
 ## 改动类型判定
 
-此技能集中的所有技能在推断主要改动意图时，都应使用 `_shared/type-classification.md`。
-
-推荐判定顺序：
-1. 主要是在恢复错误/回归行为吗？→ `fix`
-2. 是否增加了净新增能力、选项或工作流？→ `feat`
-3. 是否保持原有能力不变，但提升了速度、顺滑度、清晰度或交互质量？→ `perf`
-4. 是否主要是结构整理，且没有明显用户侧变化？→ `refactor`
-
-示例：
-- 新增一种导出格式 → `feat`
-- 把已有导出流程从 4 步优化到 2 步 → `perf`
-- 修复导出结果错误 → `fix`
-- 仅把导出逻辑拆成更小模块且无可见变化 → `refactor`
-
-需要特别记住的反例：
-- 给已有动作新增一个更显眼的按钮，通常是 `perf`，不是 `feat`
-- 大规模内部重写如果用户明显感受到更快更顺，仍可能是 `perf`，不是 `refactor`
-- 一个更顺滑的交互如果本质是在修复错误行为，通常是 `fix`，不是 `perf`
-
-### 快速决策树
-
-当类型拿不准时，优先走这个简化流程：
-
-1. 这次改动之前是否存在错误、异常或回归？→ `fix`
-2. 如果没有，是否增加了净新增能力、选项或工作流？→ `feat`
-3. 如果没有，是否让同一件事变得更快、更顺、更清晰、更省力？→ `perf`
-4. 如果没有，主要价值是否只是内部整理或重构？→ `refactor`
-
-这个决策树故意保持简洁，目的是在边界场景里提供稳定偏置，尤其是避免把 UI/UX 优化过度标成 `feat`。
-
-### 输出对照示例
-
-这些示例用于把“判对类型”进一步落实为“写对 commit/PR 文案”。
-
-**示例：同样能力，但体验更好**
-
-错误：
-
-```text
-feat(checkout): redesign checkout flow
-```
-
-更好：
-
-```text
-perf(checkout): streamline checkout flow feedback
-```
-
-原因：checkout 能力原本就存在，主要价值是降低操作摩擦。
-
-**示例：新增可复用工作流**
-
-错误：
-
-```text
-perf(search): improve preset workflow
-```
-
-更好：
-
-```text
-feat(search): support reusable saved presets
-```
-
-原因：可复用的 saved preset 是新增能力，不只是优化。
-
-**示例：恢复错误行为**
-
-错误：
-
-```text
-perf(filters): improve filter persistence
-```
-
-更好：
-
-```text
-fix(filters): preserve state after navigation
-```
-
-原因：主要价值是恢复正确性，而不是体验润色。
-
-**示例：深层重写但用户明显感知更快**
-
-错误：
-
-```text
-refactor(table): rewrite render pipeline
-```
-
-更好：
-
-```text
-perf(table): reduce scroll jank in large datasets
-```
-
-原因：用户真正感知到的是性能改善，而不是内部结构更整洁。
-
-### 容易误导的措辞提示
-
-要小心那些“听起来像某种类型”，但实际上不足以直接决定类型的词。
-
-- `redesign`、`revamp`、`add button`、`enhance UI` **不**自动等于 `feat`
-- `improve`、`optimize`、`streamline` **不**自动等于 `perf`
-- `rewrite`、`rework`、`replace architecture` **不**自动等于 `refactor`
-- `fix UX`、`correct flow`、`improve validation` **不**自动等于 `fix`
-
-推荐纠偏方式：
-- 先忽略这些带强烈倾向的动词
-- 用更中性的句子重述改动
-- 再按用户结果分类：是新增能力、体验变好、恢复正确性，还是仅仅内部整理
-
-例如：
-- `redesign checkout` → 先问 checkout 是新增能力，还是只是更好用了
-- `rewrite rendering pipeline` → 先问用户主要得到的是更快、更正确，还是其实没什么可见变化
+所有技能都用 [`_shared/type-classification.md`](../../skills/git-change-writing/_shared/type-classification.md) 判断改动的主要意图。类型边界、取舍规则和措辞示例只在那一个文件里定义，不要在各个 `SKILL.md` 或本文档里再写一遍。
 
 ## 语言行为
 
@@ -243,7 +129,7 @@ perf(table): reduce scroll jank in large datasets
 2. **输出结构一致性** - 代码块是否仍可直接复制？
 3. **语言行为一致性** - 双语输出是否仍以相同方式工作？
 4. **类型判定一致性** - `branch-name`、`commit-message`、`pr-content`、`change-pack` 是否仍使用一致的意图判定逻辑？
-5. **共享引用** - 变更是否需要传播到 `_shared/` 文件？
+5. **共享引用** - 是否只改了顶层 `_shared/`，并执行了 `node scripts/sync-shared.mjs`？
 
 **为什么要做这些检查：** 这些技能被设计为协同工作。不一致会造成混乱并降低技能集的价值。
 

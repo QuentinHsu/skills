@@ -36,11 +36,7 @@ Build one compact `DIFF_CONTEXT` containing:
 - optional issue references if explicitly provided
 - domain keywords (`terms`) for naming consistency
 
-When setting `intent`, classify by **primary user-facing value**:
-- `feat` for net-new capability or workflow
-- `perf` for improving an existing capability's speed, smoothness, UI quality, or interaction quality
-- prefer `perf` over `feat` for pure UI/UX/interaction optimization without new utility
-- prefer `fix` when the main change restores broken behavior
+Set `intent` by primary user-facing value, following the type-classification rules above.
 
 **Why build DIFF_CONTEXT:**
 - Single source of truth for all three outputs

@@ -29,7 +29,7 @@ This skill set helps generate Git-related writing artifacts (branch names, commi
 - `pr-heading-map.md` - Type-specific PR section headings
 - `type-classification.md` - Shared rules for choosing `feat|perf|fix|refactor|...`
 
-When changing shared guidance, update `skills/git-change-writing/_shared/` first, then sync the same files into each skill-local `_shared/` directory.
+When changing shared guidance, edit only `skills/git-change-writing/_shared/`, then run `node scripts/sync-shared.mjs`. The script copies each file only into the skills that reference it, and CI fails if the copies drift.
 
 ### 2. Branch-Level Diff First
 
@@ -100,121 +100,7 @@ A compact, structured summary of changes that can be reused across multiple outp
 
 ## Change Type Classification
 
-All skills in this set should use `_shared/type-classification.md` when inferring primary change intent.
-
-Recommended decision order:
-1. Is it mainly restoring broken behavior? → `fix`
-2. Does it add a net-new capability, option, or workflow? → `feat`
-3. Does it keep the same capability but improve speed, smoothness, clarity, or interaction quality? → `perf`
-4. Is it mainly structural cleanup without meaningful user-facing change? → `refactor`
-
-Examples:
-- Add a new export format → `feat`
-- Reduce an existing export flow from 4 clicks to 2 → `perf`
-- Fix export returning wrong data → `fix`
-- Split export logic into smaller modules with no visible change → `refactor`
-
-Counterexamples to keep in mind:
-- A new button for an already existing action is usually `perf`, not `feat`
-- A major internal rewrite with visibly faster UX may still be `perf`, not `refactor`
-- A smoother interaction that mainly repairs broken behavior is usually `fix`, not `perf`
-
-### Quick Decision Tree
-
-Use this compact flow when the type is ambiguous:
-
-1. Was something broken or regressed before? → `fix`
-2. If not, does the change add a net-new capability, option, or workflow? → `feat`
-3. If not, does it make the same task faster, smoother, clearer, or easier? → `perf`
-4. If not, is the main value internal cleanup or restructuring? → `refactor`
-
-This decision tree is intentionally simple. It is meant to bias the model toward stable choices in borderline cases, especially where UI/UX work is easy to over-label as `feat`.
-
-### Output Contrast Examples
-
-These examples help translate the classification into better commit/PR wording.
-
-**Example: same capability, better UX**
-
-Wrong:
-
-```text
-feat(checkout): redesign checkout flow
-```
-
-Better:
-
-```text
-perf(checkout): streamline checkout flow feedback
-```
-
-Why: the checkout capability already existed; the value is reduced friction.
-
-**Example: new reusable workflow**
-
-Wrong:
-
-```text
-perf(search): improve preset workflow
-```
-
-Better:
-
-```text
-feat(search): support reusable saved presets
-```
-
-Why: reusable saved presets are a new user capability.
-
-**Example: broken behavior restored**
-
-Wrong:
-
-```text
-perf(filters): improve filter persistence
-```
-
-Better:
-
-```text
-fix(filters): preserve state after navigation
-```
-
-Why: the main value is correctness, not polish.
-
-**Example: deep rewrite with user-visible speed gain**
-
-Wrong:
-
-```text
-refactor(table): rewrite render pipeline
-```
-
-Better:
-
-```text
-perf(table): reduce scroll jank in large datasets
-```
-
-Why: users primarily feel the performance improvement.
-
-### Misleading Wording Hints
-
-Be careful with words that sound like a type label but often are not sufficient on their own.
-
-- `redesign`, `revamp`, `add button`, `enhance UI` do **not** automatically mean `feat`
-- `improve`, `optimize`, `streamline` do **not** automatically mean `perf`
-- `rewrite`, `rework`, `replace architecture` do **not** automatically mean `refactor`
-- `fix UX`, `correct flow`, `improve validation` do **not** automatically mean `fix`
-
-Preferred correction:
-- ignore the loaded verb first
-- restate the change in neutral language
-- classify based on user outcome: new capability, better experience, restored correctness, or internal cleanup
-
-Example:
-- `redesign checkout` → ask whether checkout does something new or just feels better
-- `rewrite rendering pipeline` → ask whether users mainly gain speed, correctness, or no visible change
+All skills in this set classify primary intent with [`_shared/type-classification.md`](../../skills/git-change-writing/_shared/type-classification.md). It is the only place that defines type boundaries, tie-breakers, and wording examples. Do not restate those rules in individual `SKILL.md` files or in this document.
 
 ## Language Behavior
 
@@ -243,7 +129,7 @@ When modifying any skill in this set, verify:
 2. **Output structure consistency** - Are code blocks still copy-ready?
 3. **Language behavior consistency** - Does bilingual output still work the same way?
 4. **Type classification consistency** - Do `branch-name`, `commit-message`, `pr-content`, and `change-pack` still classify intent using the same logic?
-5. **Shared references** - Do changes need to propagate to `_shared/` files?
+5. **Shared references** - Did you edit `_shared/` at the top level and run `node scripts/sync-shared.mjs`?
 
 **Why these checks:** The skills are designed to work together. Inconsistencies create confusion and reduce the value of the skill set.
 
