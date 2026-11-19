@@ -37,6 +37,17 @@ pnpx skills add Quentinhsu/skills
 - [Skills Index (English)](docs/skills.md)
 - [技能文档索引（中文）](docs/skills.zh-CN.md)
 
+## 开发
+
+技能文件属于行为代码。新增或修改技能后执行：
+
+```bash
+node scripts/lint-skills.mjs --write  # 校验 frontmatter 和链接，并重新生成文档索引
+node scripts/sync-shared.mjs          # 把 _shared/ 下的文件分发到实际引用它们的技能
+```
+
+CI 会以检查模式运行这两个脚本。
+
 ## License
 
 MIT

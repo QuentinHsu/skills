@@ -37,6 +37,17 @@ Detailed skill documentation:
 - [Skills Index (English)](docs/skills.md)
 - [技能文档索引（中文）](docs/skills.zh-CN.md)
 
+## Development
+
+Skill files are behavior code. After adding or editing a skill, run:
+
+```bash
+node scripts/lint-skills.mjs --write  # validate frontmatter and links, regenerate docs index
+node scripts/sync-shared.mjs          # distribute _shared/ files to the skills that use them
+```
+
+CI runs both in check mode.
+
 ## License
 
 MIT
