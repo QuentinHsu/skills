@@ -1,6 +1,6 @@
 ---
 name: commit-message
-description: "Generate a Conventional Commits message from the staged diff, and optionally commit it. Use when the user wants a commit message or wants to commit staged changes, e.g. '生成 commit', '写 commit message', 'write a commit message', '/commit-message zh auto'."
+description: "Generate a Conventional Commits message from the staged diff and commit by default. Use when the user wants to generate a commit message or commit staged changes, e.g. '生成 commit', '写 commit message', '/commit-message', '/commit-message zh'."
 metadata:
   author: QuentinHsu
   version: "2026.11.19"
@@ -10,13 +10,13 @@ metadata:
 
 Generate a high-quality commit message from staged changes following Conventional Commits format.
 
-When the user explicitly requests execution mode (for example `/commit-message en auto`), generate the final commit message in the requested language and use it to commit the staged changes automatically.
+By default, generate an English commit message and commit the staged changes. An explicit language selection changes the commit message language. Only skip the commit when the user explicitly asks for a preview or a message without committing.
 
 ## Context Reuse (Step 0)
 
 See [_shared/context-reuse.md](./_shared/context-reuse.md) for the context reuse protocol.
 
-If `DIFF_CONTEXT` or `RAW_DIFF` is already provided, use it directly to save time and tokens.
+If `DIFF_CONTEXT` or `RAW_DIFF` is already provided, reuse it when it describes the current staged changes. Before committing, verify the staged diff rather than relying on branch or working-tree context.
 
 ## Read Staged Diff (Step 1)
 
@@ -139,7 +139,7 @@ Use for metadata:
 - Breaking changes: `BREAKING CHANGE: <description>`
 - Issue references: `Closes #123` (commit fully resolves the issue), `Refs #456` (related but not resolved)
 
-Never add any `Co-authored-by` trailer, regardless of capitalization or whether it names a person, AI, or tool. This applies to every generated message, including previews and auto commits.
+Never add any `Co-authored-by` trailer, regardless of capitalization or whether it names a person, AI, or tool. This applies to every generated message, including previews and commits.
 
 Use `Closes` / `Fixes` / `Resolves` only when the commit fully resolves the referenced issue. Use `Refs` for related issues, partial work, or follow-up items. Never fabricate issue references — only include ones explicitly mentioned in the diff context.
 
@@ -147,7 +147,7 @@ Footer content must be factual and directly supported by staged diff/context.
 
 ## Normalize Final Message (Step 4)
 
-Always run the generated message through `scripts/format_commit_message.py` before preview output or auto commit.
+Always run the generated message through `scripts/format_commit_message.py` before preview output or committing.
 
 Use this pipeline:
 
@@ -177,11 +177,7 @@ Never return or commit a message that bypasses this normalization step.
 
 ## Language, Command Variants, and Output Format (Step 5)
 
-See [_shared/bilingual-output.md](./_shared/bilingual-output.md) for bilingual output rules.
-
-Default: output both 简体中文 and English versions.
-
-If user explicitly requests single language, output only that language.
+Default to one English commit message. Select another language only when the user explicitly requests it.
 
 Recognize explicit language selection from natural language requests or slash-command style inputs such as:
 - `/commit-message en`
@@ -193,27 +189,20 @@ Recognize explicit language selection from natural language requests or slash-co
 Language token mapping:
 - `en`, `english` → English only
 - `zh`, `zh-cn`, `cn`, `中文`, `简体中文` → Simplified Chinese only
+- Other unambiguous language abbreviations select the corresponding language (for example, `ja` → Japanese). If the abbreviation is unclear, ask the user which language they mean.
 
-If no language is explicitly requested:
-- preview mode: output both 简体中文 and English versions
-- `auto` mode: resolve one final commit language before execution; prefer English by default unless the user clearly asks for Chinese
+Write the subject and body in the selected language; `type(scope)` remains in English.
 
-Each language gets independent code block with language label above it.
+Slash-command behavior:
+- `/commit-message` → generate an English commit message and commit the staged changes
+- `/commit-message en` → generate an English commit message and commit the staged changes
+- `/commit-message zh` → generate a Simplified Chinese commit message and commit the staged changes
 
-Chinese version: subject and body written in Simplified Chinese (`type(scope)` remains in English — they are Conventional Commits keywords).
-English version: subject and body written in English.
+Only when the user explicitly requests a preview or a message without committing, return normalized, copy-ready message text without committing. Default to English for a preview too. If the user explicitly requests a bilingual preview, follow [_shared/bilingual-output.md](./_shared/bilingual-output.md) and normalize each language separately.
 
-Slash-command execution hint:
-- `/commit-message en auto` → generate English commit message and auto-commit staged changes
-- `/commit-message zh auto` → generate Simplified Chinese commit message and auto-commit staged changes
+## Commit Execution (Step 6)
 
-If `auto` is not present, stay in preview mode and only output copy-ready commit message text.
-
-Before outputting preview code blocks, normalize each language's commit message with `scripts/format_commit_message.py`.
-
-## Auto Commit Execution (Step 6)
-
-If the request explicitly includes `auto` (for example `/commit-message en auto`) or clearly asks you to commit immediately, switch from preview mode to execution mode.
+Unless the user explicitly requests a preview or a message without committing, attempt the commit by default. No execution flag is needed.
 
 Execution rules:
 
@@ -224,20 +213,20 @@ Execution rules:
 5. Preserve normalized header/body/footer formatting exactly, including blank lines and trailers.
 6. Never pass the draft message directly to `git commit`.
 7. Prefer a full-message commit input path that safely supports multiline content, instead of collapsing everything into a single-line header.
-8. Do not ask an extra "should I commit now" question when the user has already chosen `auto`.
-9. Keep the final auto-commit message clean and content-derived; do not append attribution or co-author trailers.
-10. Never auto-commit messages containing AI, provider, or tool attribution.
+8. Do not ask an extra "should I commit now" question when the user invokes the skill.
+9. Keep the final commit message clean and content-derived; do not append attribution or co-author trailers.
+10. Never commit messages containing AI, provider, or tool attribution.
 
 If staged diff is empty, stop with the same short reminder defined in Step 1.
 
-For `auto` mode footer safety:
+For commit footer safety:
 - allow only clean, diff-supported commit content in the final message
 - do not add `Co-authored-by` trailers, regardless of capitalization or identity
 - never add assistant, model, vendor, or tool attribution to the committed message
 
 ### Signed Commit and GPG Confirmation
 
-When execution mode is enabled, support signed commits as part of the normal workflow:
+Support signed commits as part of the normal workflow:
 
 - If the user explicitly requests signing, or the Git/repository configuration already requires signing (for example `commit.gpgsign=true`), perform a signed commit.
 - Allow Git, GPG, pinentry, or the operating system to surface the normal signing confirmation flow, including fingerprint confirmation dialogs when available.
@@ -247,9 +236,7 @@ When execution mode is enabled, support signed commits as part of the normal wor
 
 ### Execution Output
 
-In `auto` mode, do not return bilingual preview blocks as the primary result.
-
-Instead, return a concise execution summary containing:
+After a commit attempt, return a concise execution summary containing:
 - whether the commit succeeded
 - the resolved commit language
 - the created commit hash and committed header when available
@@ -379,14 +366,14 @@ BREAKING CHANGE: profile update endpoint changes from PUT /profile to PATCH /use
 Closes #123
 ```
 
-## Auto Mode Examples
+## Commit Execution Examples
 
-### Auto commit in English
+### Default commit in English
 
 Request:
 
 ```text
-/commit-message en auto
+/commit-message
 ```
 
 Expected behavior:
@@ -396,12 +383,12 @@ Expected behavior:
 - allow GPG / fingerprint authorization confirmation to appear if signing is requested or configured
 - return a short success summary instead of bilingual preview blocks
 
-### Auto commit in Simplified Chinese
+### Commit in Simplified Chinese
 
 Request:
 
 ```text
-/commit-message zh auto
+/commit-message zh
 ```
 
 Expected behavior:
@@ -424,6 +411,6 @@ Expected behavior:
 - Keep terminology consistent with actual code symbols and file paths
 - Keep body concise but informative for future review
 - For Header + Body output, allow exactly one blank line between sections and zero blank lines between adjacent bullets
-- In `auto` mode, execute exactly one commit against the staged changes only
-- In `auto` mode, commit only the clean generated git message; do not append AI or tool attribution trailers
+- Execute exactly one commit against the staged changes only, unless the user explicitly requests a preview
+- Commit only the clean generated git message; do not append AI or tool attribution trailers
 - Never claim a commit succeeded unless Git actually reports success

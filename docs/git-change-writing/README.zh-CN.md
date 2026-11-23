@@ -10,7 +10,7 @@ English version: [`README.md`](README.md)
 
 **技能集包含：**
 - `branch-name` - 从变更生成分支名
-- `commit-message` - 生成符合规范的 commit 信息
+- `commit-message` - 生成符合规范的 commit 信息并提交暂存的更改
 - `pr-content` - 生成 PR 标题和描述
 - `change-pack` - 从一个共享上下文生成以上全部
 
@@ -49,6 +49,7 @@ English version: [`README.md`](README.md)
 - PR Title 和 PR Description 是独立的块（GitHub 有两个输入框）
 - PR Title 和 commit 信息使用相同的 `type(scope): subject` 头部形态
 - 双语输出为每种语言使用独立的块
+- `/commit-message` 默认生成英文信息并提交；`/commit-message zh` 使用简体中文
 - 生成的 commit 信息不包含 `Co-authored-by` 署名
 
 ### 4. 解释为什么，不只是说什么
@@ -105,7 +106,7 @@ UI/UX 的关键边界：
 
 ## 语言行为
 
-**默认：** 输出简体中文和 English 两个版本（语义对齐，不是逐字翻译）。
+**默认：** 输出简体中文和 English 两个版本（语义对齐，不是逐字翻译）；`commit-message` 除外，默认生成一条英文信息并提交。
 
 **覆盖：** 如果用户明确要求单一语言，仅输出该语言。
 
@@ -143,8 +144,8 @@ UI/UX 的关键边界：
 用户："给这个分支起个名字"
 → 使用 branch-name 技能
 
-# 仅生成 commit 信息
-用户："生成 commit message"
+# 生成 commit 信息并提交暂存的更改
+用户："/commit-message"
 → 使用 commit-message 技能
 
 # 仅生成 PR 内容

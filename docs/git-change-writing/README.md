@@ -10,7 +10,7 @@ This skill set helps generate Git-related writing artifacts (branch names, commi
 
 **Skills in this set:**
 - `branch-name` - Generate branch names from changes
-- `commit-message` - Generate conventional commit messages
+- `commit-message` - Generate a conventional commit message and commit staged changes
 - `pr-content` - Generate PR title and description
 - `change-pack` - Generate all three from one shared context
 
@@ -49,6 +49,7 @@ When changing shared guidance, edit only `skills/git-change-writing/_shared/`, t
 - PR Title and PR Description are separate blocks (GitHub has two input fields)
 - PR Title follows the same `type(scope): subject` header shape as commit messages
 - Bilingual outputs use independent blocks for each language
+- `/commit-message` commits with an English message by default; `/commit-message zh` uses Simplified Chinese
 - Generated commit messages never include `Co-authored-by` trailers
 
 ### 4. Explain Why, Not Just What
@@ -105,7 +106,7 @@ All skills in this set classify primary intent with [`_shared/type-classificatio
 
 ## Language Behavior
 
-**Default:** Output both Simplified Chinese and English versions (semantically aligned, not word-for-word translation).
+**Default:** Output both Simplified Chinese and English versions (semantically aligned, not word-for-word translation), except `commit-message`, which defaults to one English message and commits it.
 
 **Override:** If user explicitly requests single language, output only that language.
 
@@ -143,8 +144,8 @@ When modifying any skill in this set, verify:
 User: "给这个分支起个名字"
 → Uses branch-name skill
 
-# Generate commit message only
-User: "生成 commit message"
+# Generate a message and commit staged changes
+User: "/commit-message"
 → Uses commit-message skill
 
 # Generate PR content only
