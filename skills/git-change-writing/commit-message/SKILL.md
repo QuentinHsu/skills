@@ -138,7 +138,8 @@ Add one blank line after Body (or after Header if Body omitted).
 Use for metadata:
 - Breaking changes: `BREAKING CHANGE: <description>`
 - Issue references: `Closes #123` (commit fully resolves the issue), `Refs #456` (related but not resolved)
-- Co-authors/trailers when needed
+
+Never add any `Co-authored-by` trailer, regardless of capitalization or whether it names a person, AI, or tool. This applies to every generated message, including previews and auto commits.
 
 Use `Closes` / `Fixes` / `Resolves` only when the commit fully resolves the referenced issue. Use `Refs` for related issues, partial work, or follow-up items. Never fabricate issue references — only include ones explicitly mentioned in the diff context.
 
@@ -224,14 +225,14 @@ Execution rules:
 6. Never pass the draft message directly to `git commit`.
 7. Prefer a full-message commit input path that safely supports multiline content, instead of collapsing everything into a single-line header.
 8. Do not ask an extra "should I commit now" question when the user has already chosen `auto`.
-9. Keep the final auto-commit message clean and content-derived: do not append attribution or co-author trailers that were not explicitly requested and factually justified.
-10. In particular, never auto-commit messages containing AI/provider attribution lines such as `Co-Authored-By: Claude Opus 4.7 <noreply@anthropic.com>` or similar generated identity markers.
+9. Keep the final auto-commit message clean and content-derived; do not append attribution or co-author trailers.
+10. Never auto-commit messages containing AI, provider, or tool attribution.
 
 If staged diff is empty, stop with the same short reminder defined in Step 1.
 
 For `auto` mode footer safety:
 - allow only clean, diff-supported commit content in the final message
-- do not inject `Co-authored-by` / `Co-Authored-By` trailers unless the user explicitly asked for a legitimate human co-author and the trailer is factually justified
+- do not add `Co-authored-by` trailers, regardless of capitalization or identity
 - never add assistant, model, vendor, or tool attribution to the committed message
 
 ### Signed Commit and GPG Confirmation
@@ -413,7 +414,7 @@ Expected behavior:
 ## Modern Conventions (Recommended)
 
 - For breaking changes, use bang marker in header (`type(scope)!:`) plus `BREAKING CHANGE:` in footer
-- Footer trailers should use standardized tokens: `Closes #123`, `Refs #456`, `Co-authored-by: Name <email>`
+- Footer references should use standardized tokens such as `Closes #123` and `Refs #456`
 - Keep Body lines readable (soft wrap around 72-100 chars recommended)
 - Avoid noisy wording; prioritize machine-parseable and review-friendly phrasing
 

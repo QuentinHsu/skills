@@ -49,6 +49,7 @@ English version: [`README.md`](README.md)
 - PR Title 和 PR Description 是独立的块（GitHub 有两个输入框）
 - PR Title 和 commit 信息使用相同的 `type(scope): subject` 头部形态
 - 双语输出为每种语言使用独立的块
+- 生成的 commit 信息不包含 `Co-authored-by` 署名
 
 ### 4. 解释为什么，不只是说什么
 

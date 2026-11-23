@@ -67,6 +67,8 @@ Generate Conventional Commits output:
 - required Header: `type(scope): subject`
 - optional Body and Footer
 
+Never add any `Co-authored-by` trailer, regardless of capitalization or whether it names a person, AI, or tool.
+
 Keep header ≤ 72 chars (Git tools truncate longer headers).
 
 When Body is present, format it as a tight single-spaced bullet list:

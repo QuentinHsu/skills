@@ -49,6 +49,7 @@ When changing shared guidance, edit only `skills/git-change-writing/_shared/`, t
 - PR Title and PR Description are separate blocks (GitHub has two input fields)
 - PR Title follows the same `type(scope): subject` header shape as commit messages
 - Bilingual outputs use independent blocks for each language
+- Generated commit messages never include `Co-authored-by` trailers
 
 ### 4. Explain Why, Not Just What
 
